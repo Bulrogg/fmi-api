@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class CouponsTest {
+public class CouponsIntegrationTest {
 
     private final static String BASE_URL = "http://localhost:8080/";
 

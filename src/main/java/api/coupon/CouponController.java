@@ -38,7 +38,6 @@ public class CouponController {
         return couponMap.get(couponId);
     }
 
-    // curl -H "Content-Type: application/json" -X POST -d '{"nom":"reduction 4","reduction":"1000 euros"}' http://localhost:8080/v1/coupons/
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes="application/json")
     public ResponseEntity<Coupon> addCoupon(@RequestBody Coupon coupon) {
         log("addCoupon " + coupon);
