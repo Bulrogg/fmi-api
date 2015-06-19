@@ -87,4 +87,9 @@ public class CouponsSteps extends BaseTest {
         reponseDuDernierAppel = getCouponResponseEntity(reponseDuDernierAppel.getBody().getId());
         je_ne_recois_pas_de_coupon();
     }
+
+    @And("^l'api m'a répondu en moins de \"([^\"]*)\" ms$")
+    public void l_api_m_a_répondu_en_moins_de_ms(long tempsMax) throws Throwable {
+        assertTrue(getNbMsPourDernierAppel() < tempsMax);
+    }
 }

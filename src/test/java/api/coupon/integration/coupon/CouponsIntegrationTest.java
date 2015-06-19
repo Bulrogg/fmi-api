@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 
 public class CouponsIntegrationTest extends BaseTest {
 
+    protected final static long TEMPS_MAX_POUR_REPONSE = 300;
+
     @Test
     public void getCoupon_retourne_404_si_inconnu() {
         int idCouponInexistant = -1;
@@ -48,6 +50,7 @@ public class CouponsIntegrationTest extends BaseTest {
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertTrue(getNbMsPourDernierAppel() < TEMPS_MAX_POUR_REPONSE);
         Coupon coupon = response.getBody();
         assertThat(coupon.getId(), is(idCoupon));
 
@@ -62,6 +65,7 @@ public class CouponsIntegrationTest extends BaseTest {
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
+        assertTrue("temps de réponse trop long", getNbMsPourDernierAppel() < TEMPS_MAX_POUR_REPONSE);
     }
 
     private Coupon postCouponByApi(String nom, String reduction) {
@@ -73,6 +77,7 @@ public class CouponsIntegrationTest extends BaseTest {
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
         assertThat(response.getBody().getId(), notNullValue());
+        assertTrue("temps de réponse trop long", getNbMsPourDernierAppel() < TEMPS_MAX_POUR_REPONSE);
 
         return response.getBody();
     }

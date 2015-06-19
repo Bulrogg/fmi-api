@@ -14,6 +14,8 @@ import java.util.Map;
 @RequestMapping("/v1/coupons")
 public class CouponController {
 
+    private final static long TEMPS_AVANT_DE_REPONDRE = 100;
+
     private Map<Integer, Coupon> couponMap = new HashMap<>();
     private int nextCouponId = 1;
 
@@ -26,6 +28,7 @@ public class CouponController {
     @RequestMapping(value = "/", method = RequestMethod.GET, produces="application/json")
     public List<Coupon> getAllCoupons() {
         log("getAllCoupons");
+        simulerTempsDeCalcul();
 
         return new ArrayList<>(couponMap.values());
     }
@@ -33,6 +36,7 @@ public class CouponController {
     @RequestMapping(value = "/{couponId}", method = RequestMethod.GET, produces="application/json")
     public Coupon getCoupons(@PathVariable("couponId") int couponId) {
         log("getCoupon " + couponId);
+        simulerTempsDeCalcul();
 
         verifieIdCouponExiste(couponId);
         return couponMap.get(couponId);
@@ -41,6 +45,8 @@ public class CouponController {
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes="application/json")
     public ResponseEntity<Coupon> addCoupon(@RequestBody Coupon coupon) {
         log("addCoupon " + coupon);
+        simulerTempsDeCalcul();
+
         Coupon couponAjoute = addCoupon(coupon.getNom(), coupon.getReduction());
         return new ResponseEntity<>(couponAjoute, HttpStatus.CREATED);
     }
@@ -48,6 +54,8 @@ public class CouponController {
     @RequestMapping(value = "/{couponId}", method = RequestMethod.DELETE)
     public void deleteCoupon(@PathVariable("couponId") int couponId) {
         log("deleteCoupon " + couponId);
+        simulerTempsDeCalcul();
+
         verifieIdCouponExiste(couponId);
         couponMap.remove(couponId);
     }
@@ -71,6 +79,13 @@ public class CouponController {
 
     private void log(String str) {
         System.out.println("----------------> " + str);
+    }
+
+    private void simulerTempsDeCalcul() {
+        try {
+            Thread.sleep(TEMPS_AVANT_DE_REPONDRE);
+        } catch (InterruptedException e) {
+        }
     }
 
 }

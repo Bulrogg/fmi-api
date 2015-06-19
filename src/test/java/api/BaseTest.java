@@ -1,6 +1,7 @@
 package api;
 
 import api.coupon.Coupon;
+import org.joda.time.DateTime;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -15,15 +16,30 @@ public class BaseTest {
 
     protected RestTemplate template = new TestRestTemplate();
 
+    private DateTime dateJusteAvantLeDernierAppel;
+    private DateTime dateJusteApresLeDernierAppel;
+
+    protected long getNbMsPourDernierAppel() {
+        return dateJusteApresLeDernierAppel.getMillis() - dateJusteAvantLeDernierAppel.getMillis();
+    }
+
     protected void deleteCouponByApi(int idCoupon) {
+        dateJusteAvantLeDernierAppel = DateTime.now();
         template.delete(URL_DELETE_COUPON + idCoupon);
+        dateJusteApresLeDernierAppel = DateTime.now();
     }
 
     protected ResponseEntity<Coupon> getCouponResponseEntity(int idCoupon) {
-        return template.getForEntity(URL_GET_COUPON + idCoupon, Coupon.class);
+        dateJusteAvantLeDernierAppel = DateTime.now();
+        ResponseEntity<Coupon> response = template.getForEntity(URL_GET_COUPON + idCoupon, Coupon.class);
+        dateJusteApresLeDernierAppel = DateTime.now();
+        return response;
     }
 
     protected ResponseEntity<Coupon> postCouponResponseEntity(String nom, String reduction) {
-        return template.postForEntity(URL_POST_COUPON, new Coupon(nom, reduction), Coupon.class);
+        dateJusteAvantLeDernierAppel = DateTime.now();
+        ResponseEntity<Coupon> response = template.postForEntity(URL_POST_COUPON, new Coupon(nom, reduction), Coupon.class);
+        dateJusteApresLeDernierAppel = DateTime.now();
+        return response;
     }
 }
