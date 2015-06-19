@@ -1,23 +1,15 @@
-package api.coupon;
+package api.coupon.integration.coupon;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
+import api.BaseTest;
+import api.coupon.Coupon;
 import org.junit.Test;
-import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
-public class CouponsIntegrationTest {
-
-    private final static String BASE_URL = "http://localhost:8080/";
-
-    private final static String URL_DELETE_COUPON = BASE_URL + "v1/coupons/";
-    private final static String URL_GET_COUPON = BASE_URL + "v1/coupons/";
-    private final static String URL_POST_COUPON = BASE_URL + "v1/coupons/";
-
-    RestTemplate template = new TestRestTemplate();
+public class CouponsIntegrationTest extends BaseTest {
 
     @Test
     public void getCoupon_retourne_404_si_inconnu() {
@@ -52,7 +44,7 @@ public class CouponsIntegrationTest {
         // Given
 
         // When
-        ResponseEntity<Coupon> response = template.getForEntity(URL_GET_COUPON + idCoupon, Coupon.class);
+        ResponseEntity<Coupon> response = getCouponResponseEntity(idCoupon);
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
@@ -66,7 +58,7 @@ public class CouponsIntegrationTest {
         // Given
 
         // When
-        ResponseEntity<Coupon> response = template.getForEntity(URL_GET_COUPON + idCoupon, Coupon.class);
+        ResponseEntity<Coupon> response = getCouponResponseEntity(idCoupon);
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
@@ -74,20 +66,15 @@ public class CouponsIntegrationTest {
 
     private Coupon postCouponByApi(String nom, String reduction) {
         // Given
-        Coupon couponAAjouter = new Coupon(nom, reduction);
 
         // When
-        ResponseEntity<Coupon> response = template.postForEntity(URL_POST_COUPON, couponAAjouter, Coupon.class);
+        ResponseEntity<Coupon> response = postCouponResponseEntity(nom, reduction);
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
         assertThat(response.getBody().getId(), notNullValue());
 
         return response.getBody();
-    }
-
-    private void deleteCouponByApi(int idCoupon) {
-        template.delete(URL_DELETE_COUPON + idCoupon);
     }
 
 }
