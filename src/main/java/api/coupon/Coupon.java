@@ -2,7 +2,7 @@ package api.coupon;
 
 public class Coupon {
 
-    private int id;
+    private Integer id;
 
     private String nom;
 
@@ -11,13 +11,18 @@ public class Coupon {
     public Coupon() {
     }
 
-    public Coupon(int id, String nom, String reduction) {
+    public Coupon(String nom, String reduction) {
+        this.nom = nom;
+        this.reduction = reduction;
+    }
+
+    public Coupon(Integer id, String nom, String reduction) {
         this.id = id;
         this.nom = nom;
         this.reduction = reduction;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -29,7 +34,7 @@ public class Coupon {
         return reduction;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

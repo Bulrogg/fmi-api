@@ -43,7 +43,7 @@ public class CouponController {
     public ResponseEntity<Coupon> addCoupon(@RequestBody Coupon coupon) {
         log("addCoupon " + coupon);
         Coupon couponAjoute = addCoupon(coupon.getNom(), coupon.getReduction());
-        return new ResponseEntity<>(couponAjoute, HttpStatus.OK);
+        return new ResponseEntity<>(couponAjoute, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{couponId}", method = RequestMethod.DELETE)
