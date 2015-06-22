@@ -1,16 +1,36 @@
-// API
+API FMI TEST
+===========
 
-[/v1/coupons/],methods=[GET]
-[/v1/coupons/{couponId}],methods=[GET]
-[/v1/coupons/],methods=[POST]
-[/v1/coupons/{couponId}],methods=[DELETE]
+Simple API pour montrer les tests E2E, BDD et la doc API blueprint.
 
-// Test api via postman ou curl
+----------
 
-ex : curl -H "Content-Type: application/json" -X POST -d '{"nom":"reduction 4","reduction":"1000 euros"}' http://localhost:8080/v1/coupons/
 
-// Run l'api
->> mvn spring-boot:run
+API EXPOSÉ PAR LE BOUCHON
+-------------------------------------
 
-// Test E2E
-executer les tests de la classe CouponsIntegrationTest.java
+> GET /v1/coupons/
+> GET [/v1/coupons/{couponId}
+> POST /v1/coupons/   { "nom": "...", "reduction": "  ", "estUtilise": false }
+> DELETE /v1/coupons/{couponId}
+
+
+DEMARRER LE BOUCHON
+------------------------------
+Déveleloppé avec springboot
+
+> mvn spring-boot:run
+
+UTILISER L'API
+------------------
+
+plugin postman ou curl
+
+> curl -H "Content-Type: application/json" -X POST -d '{"nom":"reduction 4","reduction":"1000 euros"}' http://localhost:8080/v1/coupons/
+
+LANCER TOUS LES TESTS
+------------------------------
+Lancer les tests d'intégration + test BDD (cucumber)
+> mvn test
+
+ou un par un à partir des classes *CouponsIntegrationTest* et *CucumberRunnerTest*
