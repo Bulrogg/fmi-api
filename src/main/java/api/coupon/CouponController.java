@@ -20,9 +20,9 @@ public class CouponController {
     private int nextCouponId = 1;
 
     public CouponController() {
-        addCoupon("Reduction 1", "45 euros");
-        addCoupon("Reduction 2", "5 euros");
-        addCoupon("Reduction 3", "10 centimes");
+        addCoupon("Reduction 1", "45 euros", true);
+        addCoupon("Reduction 2", "5 euros", false);
+        addCoupon("Reduction 3", "10 centimes", false);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces="application/json")
@@ -47,7 +47,7 @@ public class CouponController {
         log("addCoupon " + coupon);
         simulerTempsDeCalcul();
 
-        Coupon couponAjoute = addCoupon(coupon.getNom(), coupon.getReduction());
+        Coupon couponAjoute = addCoupon(coupon.getNom(), coupon.getReduction(), coupon.getEstUtilise());
         return new ResponseEntity<>(couponAjoute, HttpStatus.CREATED);
     }
 
@@ -66,14 +66,13 @@ public class CouponController {
         }
     }
 
-    private Coupon addCoupon(String nom, String reduction) {
-        Coupon coupon = new Coupon(nextCouponId, nom, reduction);
+    private Coupon addCoupon(String nom, String reduction, Boolean estUtilise) {
+        Coupon coupon = new Coupon(nextCouponId, nom, reduction, estUtilise);
         this.couponMap.put(coupon.getId(), coupon);
         log("Coupon ajouté : " + coupon.toString());
 
         nextCouponId++;
         log("nextCoupon = " + nextCouponId);
-
         return coupon;
     }
 

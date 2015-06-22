@@ -8,18 +8,22 @@ public class Coupon {
 
     private String reduction;
 
+    private Boolean estUtilise;
+
     public Coupon() {
     }
 
-    public Coupon(String nom, String reduction) {
+    public Coupon(String nom, String reduction, Boolean estUtilise) {
         this.nom = nom;
         this.reduction = reduction;
+        this.estUtilise = estUtilise;
     }
 
-    public Coupon(Integer id, String nom, String reduction) {
+    public Coupon(Integer id, String nom, String reduction, Boolean estUtilise) {
         this.id = id;
         this.nom = nom;
         this.reduction = reduction;
+        this.estUtilise = estUtilise;
     }
 
     public Integer getId() {
@@ -34,6 +38,10 @@ public class Coupon {
         return reduction;
     }
 
+    public Boolean getEstUtilise() {
+        return estUtilise;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -46,12 +54,17 @@ public class Coupon {
         this.reduction = reduction;
     }
 
+    public void setEstUtilise(Boolean estUtilise) {
+        this.estUtilise = estUtilise;
+    }
+
     @Override
     public String toString() {
         return "Coupon{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 ", reduction='" + reduction + '\'' +
+                ", estUtilise=" + estUtilise +
                 '}';
     }
 }

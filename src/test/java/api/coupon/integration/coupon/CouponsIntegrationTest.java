@@ -11,12 +11,56 @@ import org.springframework.http.ResponseEntity;
 
 public class CouponsIntegrationTest extends BaseTest {
 
-    protected final static long TEMPS_MAX_POUR_REPONSE = 300;
+    protected final static long TEMPS_MAX_POUR_REPONSE = 1000;
 
     @Test
-    public void getCoupon_retourne_404_si_inconnu() {
+    public void une_erreur_404_est_bien_retournee_si_on_essaie_de_recuperer_un_coupon_inexistant() {
         int idCouponInexistant = -1;
         verifierCouponInexistantByApi(idCouponInexistant);
+    }
+
+    @Test
+    public void scenario_on_peut_recuperer_unitairement_un_coupon_utilise() throws Exception {
+        // Given
+        String nomDuCouponAAjouter = "Le coupon du test scenario_on_peut_recuperer_unitairement_un_coupon_utilise";
+        String reductionDuCouponAAjouter = "La réduction du coupon du test scenario_on_peut_recuperer_unitairement_un_coupon_utilise";
+        Boolean estUtiliseDuCouponAAjouter = true;
+
+        // When
+        Coupon couponAjoute = postCouponByApi(nomDuCouponAAjouter, reductionDuCouponAAjouter, estUtiliseDuCouponAAjouter);
+
+        Coupon couponPosteRecupere = getCouponByApi(couponAjoute.getId());
+
+        // Then
+        assertThat(couponAjoute.getNom(), is(nomDuCouponAAjouter));
+        assertThat(couponAjoute.getReduction(), is(reductionDuCouponAAjouter));
+        assertThat(couponAjoute.getEstUtilise(), is(estUtiliseDuCouponAAjouter));
+
+        assertThat(couponPosteRecupere.getNom(), is(nomDuCouponAAjouter));
+        assertThat(couponPosteRecupere.getReduction(), is(reductionDuCouponAAjouter));
+        assertThat(couponPosteRecupere.getEstUtilise(), is(estUtiliseDuCouponAAjouter));
+    }
+
+    @Test
+    public void scenario_on_peut_recuperer_unitairement_un_coupon_non_utilise() throws Exception {
+        // Given
+        String nomDuCouponAAjouter = "Le coupon du test scenario_on_peut_recuperer_unitairement_un_coupon_non_utilise";
+        String reductionDuCouponAAjouter = "La réduction du coupon du test scenario_on_peut_recuperer_unitairement_un_coupon_non_utilise";
+        Boolean estUtiliseDuCouponAAjouter = false;
+
+        // When
+        Coupon couponAjoute = postCouponByApi(nomDuCouponAAjouter, reductionDuCouponAAjouter, estUtiliseDuCouponAAjouter);
+
+        Coupon couponPosteRecupere = getCouponByApi(couponAjoute.getId());
+
+        // Then
+        assertThat(couponAjoute.getNom(), is(nomDuCouponAAjouter));
+        assertThat(couponAjoute.getReduction(), is(reductionDuCouponAAjouter));
+        assertThat(couponAjoute.getEstUtilise(), is(estUtiliseDuCouponAAjouter));
+
+        assertThat(couponPosteRecupere.getNom(), is(nomDuCouponAAjouter));
+        assertThat(couponPosteRecupere.getReduction(), is(reductionDuCouponAAjouter));
+        assertThat(couponPosteRecupere.getEstUtilise(), is(estUtiliseDuCouponAAjouter));
     }
 
     @Test
@@ -24,9 +68,10 @@ public class CouponsIntegrationTest extends BaseTest {
         // Given
         String nomDuCouponAAjouter = "Le coupon du test";
         String reductionDuCouponAAjouter = "La réduction du coupon du test";
+        Boolean estUtiliseDuCouponAAjouter = false;
 
         // When
-        Coupon couponAjoute = postCouponByApi(nomDuCouponAAjouter, reductionDuCouponAAjouter);
+        Coupon couponAjoute = postCouponByApi(nomDuCouponAAjouter, reductionDuCouponAAjouter, estUtiliseDuCouponAAjouter);
 
         Coupon couponPosteRecupere = getCouponByApi(couponAjoute.getId());
 
@@ -37,6 +82,7 @@ public class CouponsIntegrationTest extends BaseTest {
         // Then
         assertThat(couponAjoute.getNom(), is(nomDuCouponAAjouter));
         assertThat(couponAjoute.getReduction(), is(reductionDuCouponAAjouter));
+        assertThat(couponAjoute.getEstUtilise(), is(estUtiliseDuCouponAAjouter));
 
         assertThat(couponPosteRecupere.getNom(), is(nomDuCouponAAjouter));
         assertThat(couponPosteRecupere.getReduction(), is(reductionDuCouponAAjouter));
@@ -68,11 +114,11 @@ public class CouponsIntegrationTest extends BaseTest {
         assertTrue("temps de réponse trop long", getNbMsPourDernierAppel() < TEMPS_MAX_POUR_REPONSE);
     }
 
-    private Coupon postCouponByApi(String nom, String reduction) {
+    private Coupon postCouponByApi(String nom, String reduction, Boolean estUtilise) {
         // Given
 
         // When
-        ResponseEntity<Coupon> response = postCouponResponseEntity(nom, reduction);
+        ResponseEntity<Coupon> response = postCouponResponseEntity(nom, reduction, estUtilise);
 
         // Then
         assertThat(response.getStatusCode(), is(HttpStatus.CREATED));

@@ -2,6 +2,7 @@ package api.cucumber.coupons;
 
 import api.BaseTest;
 import api.coupon.Coupon;
+import cucumber.api.PendingException;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -46,9 +47,14 @@ public class CouponsSteps extends BaseTest {
         assertThat(reponseDuDernierAppel.getStatusCode().value(), is(statut));
     }
 
-    @Given("^je crée le coupon de nom \"([^\"]*)\" et de reduction \"([^\"]*)\"$")
-    public void je_crée_le_coupon_de_nom_et_de_reduction(String nom, String reduction) throws Throwable {
-        reponseDuDernierAppel = postCouponResponseEntity(nom, reduction);
+    @Given("^je crée le coupon non utilisé de nom \"([^\"]*)\" et de reduction \"([^\"]*)\"$")
+    public void je_crée_le_coupon_non_utilise_de_nom_et_de_reduction(String nom, String reduction) throws Throwable {
+        reponseDuDernierAppel = postCouponResponseEntity(nom, reduction, false);
+    }
+
+    @Given("^je crée le coupon utilisé de nom \"([^\"]*)\" et de reduction \"([^\"]*)\"$")
+    public void je_crée_le_coupon_utilise_de_nom_et_de_reduction(String nom, String reduction) throws Throwable {
+        reponseDuDernierAppel = postCouponResponseEntity(nom, reduction, true);
     }
 
     @When("^je recupere le dernier coupon que j'ai crée via l'api$")
@@ -69,6 +75,16 @@ public class CouponsSteps extends BaseTest {
     @And("^sa réduction est bien \"([^\"]*)\"$")
     public void sa_réduction_est_bien(String reductionAttendu) throws Throwable {
         assertThat(reponseDuDernierAppel.getBody().getReduction(), is(reductionAttendu));
+    }
+
+    @And("^il est marqué comme utilisé$")
+    public void il_est_marqué_comme_utilisé() throws Throwable {
+        assertThat(reponseDuDernierAppel.getBody().getEstUtilise(), is(true));
+    }
+
+    @And("^il est marqué comme non utilisé$")
+    public void il_est_marqué_comme_non_utilisé() throws Throwable {
+        assertThat(reponseDuDernierAppel.getBody().getEstUtilise(), is(false));
     }
 
     @And("^son identifiant technique est correct$")
@@ -92,4 +108,5 @@ public class CouponsSteps extends BaseTest {
     public void l_api_m_a_répondu_en_moins_de_ms(long tempsMax) throws Throwable {
         assertTrue(getNbMsPourDernierAppel() < tempsMax);
     }
+
 }

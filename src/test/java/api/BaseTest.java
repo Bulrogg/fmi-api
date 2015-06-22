@@ -36,9 +36,9 @@ public class BaseTest {
         return response;
     }
 
-    protected ResponseEntity<Coupon> postCouponResponseEntity(String nom, String reduction) {
+    protected ResponseEntity<Coupon> postCouponResponseEntity(String nom, String reduction, Boolean estUtilise) {
         dateJusteAvantLeDernierAppel = DateTime.now();
-        ResponseEntity<Coupon> response = template.postForEntity(URL_POST_COUPON, new Coupon(nom, reduction), Coupon.class);
+        ResponseEntity<Coupon> response = template.postForEntity(URL_POST_COUPON, new Coupon(nom, reduction, estUtilise), Coupon.class);
         dateJusteApresLeDernierAppel = DateTime.now();
         return response;
     }
