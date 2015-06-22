@@ -35,3 +35,15 @@ Feature: Test associé au service des coupons
     Then je ne peux plus récupérer le dernier coupons crée
     And l'api me retourne bien un statut "404"
     And l'api m'a répondu en moins de "600" ms
+
+  Scenario: Je ne récupère pas les coupons utilisés au moment de la récupération de la liste de coupons
+    Given je crée le coupon utilisé de nom "test-coupon-nom" et de reduction "test-coupon-reduction"
+    When je récupère la liste des coupons
+    Then le dernier coupon ajouté ne se trouve pas dans la liste de coupon
+    And l'api m'a répondu en moins de "600" ms
+
+  Scenario: Je récupère bien les coupons non utilisés au moment de la récupération de la liste de coupons
+    Given je crée le coupon non utilisé de nom "test-coupon-nom" et de reduction "test-coupon-reduction"
+    When je récupère la liste des coupons
+    Then le dernier coupon ajouté se trouve bien dans la liste de coupon
+    And l'api m'a répondu en moins de "600" ms

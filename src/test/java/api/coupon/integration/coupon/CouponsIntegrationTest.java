@@ -1,13 +1,19 @@
 package api.coupon.integration.coupon;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-
 import api.BaseTest;
 import api.coupon.Coupon;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class CouponsIntegrationTest extends BaseTest {
 
@@ -88,6 +94,20 @@ public class CouponsIntegrationTest extends BaseTest {
         assertThat(couponPosteRecupere.getReduction(), is(reductionDuCouponAAjouter));
     }
 
+    @Test
+    public void lorsque_l_on_recupere_tous_les_coupons_les_coupons_utilises_sont_filtres() throws Exception {
+        // Given
+        Coupon couponUtiliseAjoute = postCouponByApi("nom test coupon utilisé", "reduction test coupon utilisé", true);
+        Coupon couponNonUtiliseAjoute = postCouponByApi("nom test coupon non utilisé", "reduction test coupon non utilisé", false);
+
+        // When
+        List<Coupon> couponsRetournes = getAllCouponsByApi();
+
+        // Then
+        verifieQueLaListeDeCouponsContientLeCoupon(couponNonUtiliseAjoute.getId(), couponsRetournes);
+        verifieQueLaListeDeCouponsNeContientPasLeCoupon(couponUtiliseAjoute.getId(), couponsRetournes);
+    }
+
     private Coupon getCouponByApi(int idCoupon) {
         // Given
 
@@ -126,6 +146,20 @@ public class CouponsIntegrationTest extends BaseTest {
         assertTrue("temps de réponse trop long", getNbMsPourDernierAppel() < TEMPS_MAX_POUR_REPONSE);
 
         return response.getBody();
+    }
+
+    private List<Coupon> getAllCouponsByApi() {
+        // Given
+
+        // When
+        ResponseEntity<Coupon[]> response = getAllCoupons();
+
+        // Then
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response.getBody(), notNullValue());
+        assertTrue("temps de réponse trop long", getNbMsPourDernierAppel() < TEMPS_MAX_POUR_REPONSE);
+
+        return Arrays.asList(response.getBody());
     }
 
 }

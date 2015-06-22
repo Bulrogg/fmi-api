@@ -25,15 +25,15 @@ public class CouponController {
         addCoupon("Reduction 3", "10 centimes", false);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     public List<Coupon> getAllCoupons() {
         log("getAllCoupons");
         simulerTempsDeCalcul();
 
-        return new ArrayList<>(couponMap.values());
+        return filtrerLesCouponsUtilises();
     }
 
-    @RequestMapping(value = "/{couponId}", method = RequestMethod.GET, produces="application/json")
+    @RequestMapping(value = "/{couponId}", method = RequestMethod.GET, produces = "application/json")
     public Coupon getCoupons(@PathVariable("couponId") int couponId) {
         log("getCoupon " + couponId);
         simulerTempsDeCalcul();
@@ -42,7 +42,7 @@ public class CouponController {
         return couponMap.get(couponId);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes="application/json")
+    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<Coupon> addCoupon(@RequestBody Coupon coupon) {
         log("addCoupon " + coupon);
         simulerTempsDeCalcul();
@@ -85,6 +85,17 @@ public class CouponController {
             Thread.sleep(TEMPS_AVANT_DE_REPONDRE);
         } catch (InterruptedException e) {
         }
+    }
+
+    private List<Coupon> filtrerLesCouponsUtilises() {
+        List<Coupon> coupons = new ArrayList<>(couponMap.values());
+        List<Coupon> couponsFiltered = new ArrayList<>();
+        for (Coupon coupon : coupons) {
+            if (coupon.getEstUtilise() == false) {
+                couponsFiltered.add(coupon);
+            }
+        }
+        return couponsFiltered;
     }
 
 }
