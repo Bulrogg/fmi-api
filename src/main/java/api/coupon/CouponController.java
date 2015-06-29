@@ -1,7 +1,12 @@
 package api.coupon;
 
 import api.exception.CouponNotFoundException;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/coupons")
+@Api(basePath = "/v1/coupons", value = "Coupons", description = "Opération relatives à la gestion des coupons", produces = "application/json")
 public class CouponController {
 
     private final static long TEMPS_AVANT_DE_REPONDRE = 100;
@@ -25,7 +31,12 @@ public class CouponController {
         addCoupon("Reduction 3", "10 centimes", false);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Récupère les coupons", notes = "Permet de récupérer tous les coupons non utilisés")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "")
+    })
     public List<Coupon> getAllCoupons() {
         log("getAllCoupons");
         simulerTempsDeCalcul();
@@ -33,7 +44,13 @@ public class CouponController {
         return filtrerLesCouponsUtilises();
     }
 
-    @RequestMapping(value = "/{couponId}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{couponId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Récupère un coupon", notes = "Permet de récupérer un coupon par son identifiant")
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "Coupon non trouvé"),
+            @ApiResponse(code = 200, message = "")
+    })
     public Coupon getCoupons(@PathVariable("couponId") int couponId) {
         log("getCoupon " + couponId);
         simulerTempsDeCalcul();
@@ -42,7 +59,12 @@ public class CouponController {
         return couponMap.get(couponId);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = "application/json")
+    // TODO : utiliser le @ResponsesStatus
+    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Ajouter un coupon", notes = "Permet d'ajouter un coupon")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "")
+    })
     public ResponseEntity<Coupon> addCoupon(@RequestBody Coupon coupon) {
         log("addCoupon " + coupon);
         simulerTempsDeCalcul();
@@ -52,6 +74,12 @@ public class CouponController {
     }
 
     @RequestMapping(value = "/{couponId}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "Supprimer un coupon", notes = "Permet de supprimer un coupon par son identifiant")
+    @ApiResponses(value = {
+            @ApiResponse(code = 404, message = "Coupon non trouvé"),
+            @ApiResponse(code = 204, message = "")
+    })
     public void deleteCoupon(@PathVariable("couponId") int couponId) {
         log("deleteCoupon " + couponId);
         simulerTempsDeCalcul();

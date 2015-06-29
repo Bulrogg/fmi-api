@@ -18,6 +18,7 @@
         <java.version>1.7</java.version>
         <cucumber.version>1.2.0</cucumber.version>
         <joda-time.version>2.7</joda-time.version>
+        <swagger.springmvc.version>1.0.2</swagger.springmvc.version>
     </properties>
 
     <dependencies>
@@ -43,6 +44,12 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>${joda-time.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mangofactory</groupId>
+            <artifactId>swagger-springmvc</artifactId>
+            <version>${swagger.springmvc.version}</version>
         </dependency>
 
         <dependency>
