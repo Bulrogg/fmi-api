@@ -2,6 +2,8 @@
 
 ## GET
 
+Ne récupère que les coupons n'ayant pas été utilisé
+
 + Response 200 (application/json)
 
     + Body
