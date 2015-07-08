@@ -2,53 +2,69 @@ package api.disponibilite;
 
 import api.BaseTest;
 import api.coupon.Coupon;
+
+import static junit.framework.Assert.*;
+
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.Assert.fail;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApiDisponibiliteTest extends BaseTest {
 
+    private int nbEndpointEnErreur = 0;
+
     @Test
-    public void testGetAllCoupons() {
+    public void testEndPoint() {
+        List<String> rapportDeTest = new ArrayList<>();
+        rapportDeTest.add("Rapport de disponibilité des endpoints");
+        rapportDeTest.add(testGetAllCoupons());
+        rapportDeTest.add(testPostACoupons());
+        rapportDeTest.add(testGetACoupons());
+        rapportDeTest.add(testDeleteACoupons());
+        for (String rapport : rapportDeTest) {
+            logger(rapport);
+        }
+        assertEquals("Existance de " + nbEndpointEnErreur + " endPoint(s) non disponible", 0, nbEndpointEnErreur);
+    }
+
+    private String testGetAllCoupons() {
         ResponseEntity<Coupon[]> response = getAllCoupons();
-        assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.OK, "/v1/coupons/", "GET");
+        return assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.OK, "/v1/coupons/", "GET");
     }
 
-    @Test
-    public void testPostACoupons() {
+    private String testPostACoupons() {
         ResponseEntity<Coupon> response = postCouponResponseEntity("nom testPostACoupons", "reduction testPostACoupons", true);
-        assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.CREATED, "/v1/coupons/", "POST");
+        return assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.CREATED, "/v1/coupons/", "POST");
     }
 
-    @Test
-    public void testGetACoupons() {
+    private String testGetACoupons() {
         ResponseEntity<Coupon> postResponse = postCouponResponseEntity("nom testPostACoupons", "reduction testPostACoupons", true);
         ResponseEntity<Coupon> response = getCouponResponseEntity(postResponse.getBody().getId());
-        assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.OK, "/v1/coupons/{couponId}", "GET");
+        return assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.OK, "/v1/coupons/{couponId}", "GET");
     }
 
-    @Test
-    public void testDeleteACoupons() {
+    private String testDeleteACoupons() {
         ResponseEntity<Coupon> postResponse = postCouponResponseEntity("nom testPostACoupons", "reduction testPostACoupons", true);
         ResponseEntity<String> response = deleteCouponResponseEntity(postResponse.getBody().getId());
-        assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.NO_CONTENT, "/v1/coupons/{couponId}", "DELETE");
+        return assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.NO_CONTENT, "/v1/coupons/{couponId}", "DELETE");
     }
 
-    private void assertAndLogTempsDeReponse(HttpStatus actual, HttpStatus expected, String endPoint, String verbe) {
+    private String assertAndLogTempsDeReponse(HttpStatus actual, HttpStatus expected, String endPoint, String verbe) {
         String tempsDeReponse = "(" + getNbMsPourDernierAppel() + "ms)";
-        String suffixeLogEndpoint = endPoint + " [" + verbe + "] - " + tempsDeReponse;
-        if(expected.equals(actual)) {
-            logger("OK - " + suffixeLogEndpoint);
+        String suffixe = endPoint + " [" + verbe + "] - " + tempsDeReponse;
+        String prefix = "OK";
+        if (!expected.equals(actual)) {
+            prefix = "KO";
+            nbEndpointEnErreur++;
         }
-        else {
-            fail("KO - " + suffixeLogEndpoint);
-        }
+        return prefix + " - " + suffixe;
     }
 
     private void logger(String str) {
-        System.out.println(str);
+        System.out.println("------------> " + str);
     }
 
 }

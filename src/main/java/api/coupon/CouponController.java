@@ -40,7 +40,6 @@ public class CouponController {
     public List<Coupon> getAllCoupons() {
         log("getAllCoupons");
         simulerTempsDeCalcul();
-
         return filtrerLesCouponsUtilises();
     }
 
