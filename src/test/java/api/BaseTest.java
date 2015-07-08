@@ -13,7 +13,7 @@ import static org.junit.Assert.fail;
 
 public class BaseTest {
 
-    private final static String BASE_URL = "http://10.0.2.2:8080/";
+    private final static String BASE_URL = "http://api-fmi:8080/";
 
     protected final static String URL_DELETE_COUPON = BASE_URL + "v1/coupons/";
     protected final static String URL_ALL_COUPONS = BASE_URL + "v1/coupons/";
