@@ -3,6 +3,7 @@ package api;
 import api.coupon.Coupon;
 import org.joda.time.DateTime;
 import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -28,10 +29,11 @@ public class BaseTest {
         return dateJusteApresLeDernierAppel.getMillis() - dateJusteAvantLeDernierAppel.getMillis();
     }
 
-    protected void deleteCouponByApi(int idCoupon) {
+    protected ResponseEntity<String> deleteCouponResponseEntity(int idCoupon) {
         dateJusteAvantLeDernierAppel = DateTime.now();
-        template.delete(URL_DELETE_COUPON + idCoupon);
+        ResponseEntity<String> response = template.exchange(URL_DELETE_COUPON + idCoupon, HttpMethod.DELETE, null, String.class);
         dateJusteApresLeDernierAppel = DateTime.now();
+        return response;
     }
 
     protected ResponseEntity<Coupon> getCouponResponseEntity(int idCoupon) {

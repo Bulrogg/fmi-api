@@ -1,4 +1,4 @@
-package api.coupon.integration.coupon;
+package api.integration.coupon;
 
 import api.BaseTest;
 import api.coupon.Coupon;
@@ -80,7 +80,7 @@ public class CouponsIntegrationTest extends BaseTest {
 
         Coupon couponPosteRecupere = getCouponByApi(couponAjoute.getId());
 
-        deleteCouponByApi(couponAjoute.getId());
+        deleteACouponByApi(couponAjoute.getId());
 
         verifierCouponInexistantByApi(couponAjoute.getId());
 
@@ -159,6 +159,17 @@ public class CouponsIntegrationTest extends BaseTest {
         assertTrue("temps de réponse trop long", getNbMsPourDernierAppel() < TEMPS_MAX_POUR_REPONSE);
 
         return Arrays.asList(response.getBody());
+    }
+
+    private void deleteACouponByApi(int idCoupon) {
+        // Given
+
+        // When
+        ResponseEntity<String> response = deleteCouponResponseEntity(idCoupon);
+
+        // Then
+        assertThat(response.getStatusCode(), is(HttpStatus.NO_CONTENT));
+        assertTrue("temps de réponse trop long", getNbMsPourDernierAppel() < TEMPS_MAX_POUR_REPONSE);
     }
 
 }

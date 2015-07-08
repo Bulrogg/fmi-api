@@ -96,7 +96,7 @@ public class CouponsSteps extends BaseTest {
 
     @When("^je supprime le dernier coupon que j'ai crée$")
     public void je_supprime_le_dernier_coupon_que_j_ai_crée() throws Throwable {
-        deleteCouponByApi(reponseDuDernierGetUnitaire.getBody().getId());
+        deleteCouponResponseEntity(reponseDuDernierGetUnitaire.getBody().getId());
     }
 
     @Then("^je ne peux plus récupérer le dernier coupons crée$")
