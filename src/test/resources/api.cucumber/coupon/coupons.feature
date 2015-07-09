@@ -5,13 +5,13 @@ Feature: Test associé au service des coupons
     When j'appelle l'api pour recuperer le coupons "10000"
     Then je ne recois pas de coupon
     And l'api me retourne bien un statut "404"
-    And l'api m'a répondu en moins de "600" ms
+    And l'api m'a répondu en moins de "1100" ms
 
   Scenario: Je crée un coupon non utilisé via l'api puis je le récupère via l'api
     Given je crée le coupon non utilisé de nom "test-coupon-nom" et de reduction "test-coupon-reduction"
     When je recupere le dernier coupon que j'ai crée via l'api
     Then l'api me retourne bien un statut "200"
-    And l'api m'a répondu en moins de "600" ms
+    And l'api m'a répondu en moins de "900" ms
     And un coupon est bien retourné
     And son nom est bien "test-coupon-nom"
     And sa réduction est bien "test-coupon-reduction"
@@ -22,7 +22,7 @@ Feature: Test associé au service des coupons
     Given je crée le coupon utilisé de nom "test-coupon-nom" et de reduction "test-coupon-reduction"
     When je recupere le dernier coupon que j'ai crée via l'api
     Then l'api me retourne bien un statut "200"
-    And l'api m'a répondu en moins de "600" ms
+    And l'api m'a répondu en moins de "900" ms
     And un coupon est bien retourné
     And son nom est bien "test-coupon-nom"
     And sa réduction est bien "test-coupon-reduction"
@@ -34,16 +34,16 @@ Feature: Test associé au service des coupons
     When je supprime le dernier coupon que j'ai crée
     Then je ne peux plus récupérer le dernier coupons crée
     And l'api me retourne bien un statut "404"
-    And l'api m'a répondu en moins de "600" ms
+    And l'api m'a répondu en moins de "900" ms
 
   Scenario: Je ne récupère pas les coupons utilisés au moment de la récupération de la liste de coupons
     Given je crée le coupon utilisé de nom "test-coupon-nom" et de reduction "test-coupon-reduction"
     When je récupère la liste des coupons
     Then le dernier coupon ajouté ne se trouve pas dans la liste de coupon
-    And l'api m'a répondu en moins de "600" ms
+    And l'api m'a répondu en moins de "900" ms
 
   Scenario: Je récupère bien les coupons non utilisés au moment de la récupération de la liste de coupons
     Given je crée le coupon non utilisé de nom "test-coupon-nom" et de reduction "test-coupon-reduction"
     When je récupère la liste des coupons
     Then le dernier coupon ajouté se trouve bien dans la liste de coupon
-    And l'api m'a répondu en moins de "600" ms
+    And l'api m'a répondu en moins de "900" ms

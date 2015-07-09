@@ -20,9 +20,8 @@ import java.util.Map;
 @Api(basePath = "/v1/coupons", value = "Coupons", description = "Opération relatives à la gestion des coupons", produces = "application/json")
 public class CouponController {
 
-    private final static long TEMPS_AVANT_DE_REPONDRE = 100;
-
     private Map<Integer, Coupon> couponMap = new HashMap<>();
+
     private int nextCouponId = 1;
 
     public CouponController() {
@@ -39,7 +38,7 @@ public class CouponController {
     })
     public List<Coupon> getAllCoupons() {
         log("getAllCoupons");
-        simulerTempsDeCalcul();
+        simulerUneLatenceEntre200Et(700);
         return filtrerLesCouponsUtilises();
     }
 
@@ -52,7 +51,7 @@ public class CouponController {
     })
     public Coupon getCoupons(@PathVariable("couponId") int couponId) {
         log("getCoupon " + couponId);
-        simulerTempsDeCalcul();
+        simulerUneLatenceEntre200Et(700);
 
         verifieIdCouponExiste(couponId);
         return couponMap.get(couponId);
@@ -66,7 +65,7 @@ public class CouponController {
     })
     public ResponseEntity<Coupon> addCoupon(@RequestBody Coupon coupon) {
         log("addCoupon " + coupon);
-        simulerTempsDeCalcul();
+        simulerUneLatenceEntre200Et(500);
 
         Coupon couponAjoute = addCoupon(coupon.getNom(), coupon.getReduction(), coupon.getEstUtilise());
         return new ResponseEntity<>(couponAjoute, HttpStatus.CREATED);
@@ -81,7 +80,7 @@ public class CouponController {
     })
     public void deleteCoupon(@PathVariable("couponId") int couponId) {
         log("deleteCoupon " + couponId);
-        simulerTempsDeCalcul();
+        simulerUneLatenceEntre200Et(300);
 
         verifieIdCouponExiste(couponId);
         couponMap.remove(couponId);
@@ -107,9 +106,10 @@ public class CouponController {
         System.out.println("----------------> " + str);
     }
 
-    private void simulerTempsDeCalcul() {
+    private void simulerUneLatenceEntre200Et(int nbMaxMs) {
+        int tpsLatence = 200 + ((int) (Math.random() * (nbMaxMs - 200)));
         try {
-            Thread.sleep(TEMPS_AVANT_DE_REPONDRE);
+            Thread.sleep(tpsLatence);
         } catch (InterruptedException e) {
         }
     }
