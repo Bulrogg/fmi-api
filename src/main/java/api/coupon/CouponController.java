@@ -17,7 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/coupons")
-@Api(basePath = "/v1/coupons", value = "Coupons", description = "Opération relatives à la gestion des coupons", produces = "application/json")
+@Api(basePath = "/v1/coupons", value = "coupons", description = "Opération relatives à la gestion des coupons", produces = "application/json")
 public class CouponController {
 
     private Map<Integer, Coupon> couponMap = new HashMap<>();
@@ -34,7 +34,7 @@ public class CouponController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Récupère les coupons", notes = "Permet de récupérer tous les coupons non utilisés")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "")
+            @ApiResponse(code = 200, message = "OK")
     })
     public List<Coupon> getAllCoupons() {
         log("getAllCoupons");
@@ -47,7 +47,7 @@ public class CouponController {
     @ApiOperation(value = "Récupère un coupon", notes = "Permet de récupérer un coupon par son identifiant")
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Coupon non trouvé"),
-            @ApiResponse(code = 200, message = "")
+            @ApiResponse(code = 200, message = "OK")
     })
     public Coupon getCoupons(@PathVariable("couponId") int couponId) {
         log("getCoupon " + couponId);
@@ -61,7 +61,7 @@ public class CouponController {
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Ajouter un coupon", notes = "Permet d'ajouter un coupon")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "")
+            @ApiResponse(code = 201, message = "CREATE")
     })
     public ResponseEntity<Coupon> addCoupon(@RequestBody Coupon coupon) {
         log("addCoupon " + coupon);
@@ -76,7 +76,7 @@ public class CouponController {
     @ApiOperation(value = "Supprimer un coupon", notes = "Permet de supprimer un coupon par son identifiant")
     @ApiResponses(value = {
             @ApiResponse(code = 404, message = "Coupon non trouvé"),
-            @ApiResponse(code = 204, message = "")
+            @ApiResponse(code = 204, message = "NO CONTENT")
     })
     public void deleteCoupon(@PathVariable("couponId") int couponId) {
         log("deleteCoupon " + couponId);

@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 import static org.hamcrest.CoreMatchers.is;
 
