@@ -6,9 +6,12 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-public class ApiUnitaireDisponibilite extends BaseTest {
+import static org.hamcrest.CoreMatchers.is;
+
+public class ApiUnitaireDisponibiliteTest extends BaseTest {
 
     @Test
     public void testGetAllCoupons() {
@@ -39,16 +42,7 @@ public class ApiUnitaireDisponibilite extends BaseTest {
     private void assertAndLogTempsDeReponse(HttpStatus actual, HttpStatus expected, String endPoint, String verbe) {
         String tempsDeReponse = "(" + getNbMsPourDernierAppel() + "ms)";
         String suffixeLogEndpoint = endPoint + " [" + verbe + "] - " + tempsDeReponse;
-        if(expected.equals(actual)) {
-            logger("OK - " + suffixeLogEndpoint);
-        }
-        else {
-            fail("KO - " + suffixeLogEndpoint);
-        }
-    }
-
-    private void logger(String str) {
-        System.out.println(str);
+        assertThat("KO - " + suffixeLogEndpoint, actual, is(expected));
     }
 
 }
