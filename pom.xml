@@ -19,6 +19,7 @@
         <cucumber.version>1.2.0</cucumber.version>
         <joda-time.version>2.7</joda-time.version>
         <swagger.springmvc.version>1.0.2</swagger.springmvc.version>
+        <swagger-maven-plugin-version>3.0.0</swagger-maven-plugin-version>
     </properties>
 
     <dependencies>
@@ -83,7 +84,47 @@
                     <mainClass>api.Application</mainClass>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <version>${swagger-maven-plugin-version}</version>
+                <configuration>
+                    <apiSources>
+                        <apiSource>
+                            <springmvc>true</springmvc>
+                            <locations>api.coupon</locations>
+                            <schemes>http</schemes>
+                            <host>localhost:8080</host>
+                            <basePath>/v1/coupons</basePath>
+                            <info>
+                                <title>Spécification auto-généré des APIs exposées</title>
+                                <version>v1</version>
+                                <description>
+                                    Descriptions de toutes les APIs exposées par le bouchon
+                                </description>
+                            </info>
+                            <termsOfService>
+                                FMI Corp
+                            </termsOfService>
+                            <templatePath>${basedir}/src/main/resources/template/strapdown.html.hbs</templatePath>
+                            <outputPath>${basedir}/src/main/webapp/documentation/api.html</outputPath>
+                            <swaggerDirectory>${basedir}/src/main/webapp/documentation/</swaggerDirectory>
+                        </apiSource>
+                    </apiSources>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
+
     </build>
 
     <repositories>
