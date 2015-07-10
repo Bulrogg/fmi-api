@@ -103,10 +103,10 @@
                                 <description>
                                     Descriptions de toutes les APIs exposées par le bouchon
                                 </description>
+                                <termsOfService>
+                                    FMI Corp
+                                </termsOfService>
                             </info>
-                            <termsOfService>
-                                FMI Corp
-                            </termsOfService>
                             <templatePath>${basedir}/src/main/resources/template/strapdown.html.hbs</templatePath>
                             <outputPath>${basedir}/src/main/webapp/documentation/api.html</outputPath>
                             <swaggerDirectory>${basedir}/src/main/webapp/documentation/</swaggerDirectory>
