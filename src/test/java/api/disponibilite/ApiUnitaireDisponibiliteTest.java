@@ -39,8 +39,7 @@ public class ApiUnitaireDisponibiliteTest extends BaseTest {
     }
 
     private void assertAndLogTempsDeReponse(HttpStatus actual, HttpStatus expected, String endPoint, String verbe) {
-        String tempsDeReponse = "(" + getNbMsPourDernierAppel() + "ms)";
-        String suffixeLogEndpoint = endPoint + " [" + verbe + "] - " + tempsDeReponse;
+        String suffixeLogEndpoint = endPoint + " [" + verbe + "]";
         assertThat("KO - " + suffixeLogEndpoint, actual, is(expected));
     }
 

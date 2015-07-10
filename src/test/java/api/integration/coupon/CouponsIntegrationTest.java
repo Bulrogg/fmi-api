@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 public class CouponsIntegrationTest extends BaseTest {
 
-    protected final static long TEMPS_MAX_POUR_REPONSE = 1100;
+    protected final static long TEMPS_MAX_POUR_REPONSE = 1500;
 
     @Test
     public void une_erreur_404_est_bien_retournee_si_on_essaie_de_recuperer_un_coupon_inexistant() {

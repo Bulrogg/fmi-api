@@ -32,29 +32,28 @@ public class ApiDisponibiliteTest extends BaseTest {
 
     private String testGetAllCoupons() {
         ResponseEntity<Coupon[]> response = getAllCoupons();
-        return assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.OK, "/v1/coupons/", "GET");
+        return assertAndLog(response.getStatusCode(), HttpStatus.OK, "/v1/coupons/", "GET");
     }
 
     private String testPostACoupons() {
         ResponseEntity<Coupon> response = postCouponResponseEntity("nom testPostACoupons", "reduction testPostACoupons", true);
-        return assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.CREATED, "/v1/coupons/", "POST");
+        return assertAndLog(response.getStatusCode(), HttpStatus.CREATED, "/v1/coupons/", "POST");
     }
 
     private String testGetACoupons() {
         ResponseEntity<Coupon> postResponse = postCouponResponseEntity("nom testPostACoupons", "reduction testPostACoupons", true);
         ResponseEntity<Coupon> response = getCouponResponseEntity(postResponse.getBody().getId());
-        return assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.OK, "/v1/coupons/{couponId}", "GET");
+        return assertAndLog(response.getStatusCode(), HttpStatus.OK, "/v1/coupons/{couponId}", "GET");
     }
 
     private String testDeleteACoupons() {
         ResponseEntity<Coupon> postResponse = postCouponResponseEntity("nom testPostACoupons", "reduction testPostACoupons", true);
         ResponseEntity<String> response = deleteCouponResponseEntity(postResponse.getBody().getId());
-        return assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.NO_CONTENT, "/v1/coupons/{couponId}", "DELETE");
+        return assertAndLog(response.getStatusCode(), HttpStatus.NO_CONTENT, "/v1/coupons/{couponId}", "DELETE");
     }
 
-    private String assertAndLogTempsDeReponse(HttpStatus actual, HttpStatus expected, String endPoint, String verbe) {
-        String tempsDeReponse = "(" + getNbMsPourDernierAppel() + "ms)";
-        String suffixe = endPoint + " [" + verbe + "] - " + tempsDeReponse;
+    private String assertAndLog(HttpStatus actual, HttpStatus expected, String endPoint, String verbe) {
+        String suffixe = endPoint + " [" + verbe + "]";
         String prefix = "OK";
         if (!expected.equals(actual)) {
             prefix = "KO";
