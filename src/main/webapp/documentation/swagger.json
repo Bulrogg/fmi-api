@@ -3,7 +3,8 @@
   "info" : {
     "description" : "Descriptions de toutes les APIs exposées par le bouchon",
     "version" : "v1",
-    "title" : "Spécification auto-généré des APIs exposées"
+    "title" : "Spécification auto-généré des APIs exposées",
+    "termsOfService" : "FMI Corp"
   },
   "host" : "localhost:8080",
   "basePath" : "/v1/coupons",
