@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableSwagger
 @EnableAutoConfiguration
-public class SwaggerConfig {
+public class SwaggerDocumentationConfig {
 
     private SpringSwaggerConfig springSwaggerConfig;
 
@@ -24,7 +24,7 @@ public class SwaggerConfig {
     @Bean
     public SwaggerSpringMvcPlugin customImplementation() {
         return new SwaggerSpringMvcPlugin(this.springSwaggerConfig)
-                .apiInfo( new ApiInfo("FMI Test API", "Une API qui sert à rien pour tester plein de chose", null, null, null, null) )
+                .apiInfo(new ApiInfo("FMI Test API", "Une API qui sert à rien pour tester plein de chose", null, null, null, null))
                 .useDefaultResponseMessages(false)
                 .includePatterns("/v1.*");
     }
