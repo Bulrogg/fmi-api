@@ -1,8 +1,6 @@
-package api.services.coupon;
+package api.data;
 
-import api.data.CouponData;
-
-public class Coupon {
+public class CouponData {
 
     private Integer id;
 
@@ -12,27 +10,14 @@ public class Coupon {
 
     private Boolean estUtilise;
 
-    public Coupon() {
-    }
+    private String unAutreChampsPurBack;
 
-    public Coupon(String nom, String reduction, Boolean estUtilise) {
-        this.nom = nom;
-        this.reduction = reduction;
-        this.estUtilise = estUtilise;
-    }
-
-    public Coupon(Integer id, String nom, String reduction, Boolean estUtilise) {
+    public CouponData(Integer id, String nom, String reduction, Boolean estUtilise, String unAutreChampsPurBack) {
         this.id = id;
         this.nom = nom;
         this.reduction = reduction;
         this.estUtilise = estUtilise;
-    }
-
-    public Coupon(CouponData couponData) {
-        this.id = couponData.getId();
-        this.nom = couponData.getNom();
-        this.reduction = couponData.getReduction();
-        this.estUtilise = couponData.getEstUtilise();
+        this.unAutreChampsPurBack = unAutreChampsPurBack;
     }
 
     public Integer getId() {
@@ -51,6 +36,10 @@ public class Coupon {
         return estUtilise;
     }
 
+    public String getUnAutreChampsPurBack() {
+        return unAutreChampsPurBack;
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -67,13 +56,18 @@ public class Coupon {
         this.estUtilise = estUtilise;
     }
 
+    public void setUnAutreChampsPurBack(String unAutreChampsPurBack) {
+        this.unAutreChampsPurBack = unAutreChampsPurBack;
+    }
+
     @Override
     public String toString() {
-        return "Coupon{" +
+        return "CouponData{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 ", reduction='" + reduction + '\'' +
                 ", estUtilise=" + estUtilise +
+                ", unAutreChampsPurBack='" + unAutreChampsPurBack + '\'' +
                 '}';
     }
 }

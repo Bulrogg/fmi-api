@@ -1,33 +1,27 @@
 package api.services.coupon;
 
+import api.data.CouponData;
+import api.data.DataManager;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/coupons")
 @Api(basePath = "/v1/coupons", value = "coupons", description = "Opération relatives à la gestion des coupons", produces = "application/json")
 public class CouponController {
 
-    private Map<Integer, Coupon> couponMap = new HashMap<>();
-
-    private int nextCouponId = 1;
-
-    public CouponController() {
-        addCoupon("Reduction 1", "45 euros", true);
-        addCoupon("Reduction 2", "5 euros", false);
-        addCoupon("Reduction 3", "10 centimes", false);
-    }
+    @Autowired
+    private DataManager dataManager;
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
@@ -38,7 +32,12 @@ public class CouponController {
     public List<Coupon> getAllCoupons() {
         log("getAllCoupons");
         simulerUneLatenceEntre200Et(700);
-        return filtrerLesCouponsUtilises();
+        List<CouponData> couponsDataFiltres = dataManager.getListeCouponNonUtilises();
+        List<Coupon> couponsFiltres = new ArrayList<>();
+        for (CouponData couponData : couponsDataFiltres) {
+            couponsFiltres.add(new Coupon(couponData));
+        }
+        return couponsFiltres;
     }
 
     @RequestMapping(value = "/{couponId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,12 +47,13 @@ public class CouponController {
             @ApiResponse(code = 404, message = "Coupon non trouvé"),
             @ApiResponse(code = 200, message = "OK")
     })
-    public Coupon getCoupons(@PathVariable("couponId") int couponId) {
+    public Coupon getCoupon(@PathVariable("couponId") int couponId) {
         log("getCoupon " + couponId);
         simulerUneLatenceEntre200Et(700);
-
-        verifieIdCouponExiste(couponId);
-        return couponMap.get(couponId);
+        if(!dataManager.verifieIdCouponExiste(couponId)) {
+            throw new CouponNotFoundException(couponId);
+        }
+        return new Coupon(dataManager.getCoupon(couponId));
     }
 
     // TODO : utiliser le @ResponsesStatus
@@ -65,8 +65,7 @@ public class CouponController {
     public ResponseEntity<Coupon> addCoupon(@RequestBody Coupon coupon) {
         log("addCoupon " + coupon);
         simulerUneLatenceEntre200Et(500);
-
-        Coupon couponAjoute = addCoupon(coupon.getNom(), coupon.getReduction(), coupon.getEstUtilise());
+        Coupon couponAjoute = new Coupon(dataManager.addCoupon(coupon.getNom(), coupon.getReduction(), coupon.getEstUtilise()));
         return new ResponseEntity<>(couponAjoute, HttpStatus.CREATED);
     }
 
@@ -80,29 +79,10 @@ public class CouponController {
     public void deleteCoupon(@PathVariable("couponId") int couponId) {
         log("deleteCoupon " + couponId);
         simulerUneLatenceEntre200Et(300);
-
-        verifieIdCouponExiste(couponId);
-        couponMap.remove(couponId);
-    }
-
-    private void verifieIdCouponExiste(Integer couponId) {
-        if (!couponMap.containsKey(couponId)) {
+        if(!dataManager.verifieIdCouponExiste(couponId)) {
             throw new CouponNotFoundException(couponId);
         }
-    }
-
-    private Coupon addCoupon(String nom, String reduction, Boolean estUtilise) {
-        Coupon coupon = new Coupon(nextCouponId, nom, reduction, estUtilise);
-        this.couponMap.put(coupon.getId(), coupon);
-        log("Coupon ajouté : " + coupon.toString());
-
-        nextCouponId++;
-        log("nextCoupon = " + nextCouponId);
-        return coupon;
-    }
-
-    private void log(String str) {
-        System.out.println("----------------> " + str);
+        dataManager.supprimerCoupon(couponId);
     }
 
     private void simulerUneLatenceEntre200Et(int nbMaxMs) {
@@ -113,15 +93,8 @@ public class CouponController {
         }
     }
 
-    private List<Coupon> filtrerLesCouponsUtilises() {
-        List<Coupon> coupons = new ArrayList<>(couponMap.values());
-        List<Coupon> couponsFiltered = new ArrayList<>();
-        for (Coupon coupon : coupons) {
-            if (coupon.getEstUtilise() == false) {
-                couponsFiltered.add(coupon);
-            }
-        }
-        return couponsFiltered;
+    private void log(String str) {
+        System.out.println("----------------> " + str);
     }
 
 }

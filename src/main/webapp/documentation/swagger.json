@@ -51,7 +51,7 @@
         "tags" : [ "coupons" ],
         "summary" : "Récupère un coupon",
         "description" : "Permet de récupérer un coupon par son identifiant",
-        "operationId" : "getCoupons",
+        "operationId" : "getCoupon",
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "couponId",
