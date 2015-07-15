@@ -2,6 +2,7 @@ package api.services.coupon;
 
 import api.data.CouponData;
 import api.data.DataManager;
+import api.services.BaseMockController;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;
@@ -18,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/coupons")
 @Api(basePath = "/v1/coupons", value = "coupons", description = "Opération relatives à la gestion des coupons", produces = "application/json")
-public class CouponController {
+public class CouponController extends BaseMockController {
 
     @Autowired
     private DataManager dataManager;
@@ -83,18 +84,6 @@ public class CouponController {
             throw new CouponNotFoundException(couponId);
         }
         dataManager.supprimerCoupon(couponId);
-    }
-
-    private void simulerUneLatenceEntre200Et(int nbMaxMs) {
-        int tpsLatence = 200 + ((int) (Math.random() * (nbMaxMs - 200)));
-        try {
-            Thread.sleep(tpsLatence);
-        } catch (InterruptedException e) {
-        }
-    }
-
-    private void log(String str) {
-        System.out.println("----------------> " + str);
     }
 
 }
