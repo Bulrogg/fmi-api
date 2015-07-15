@@ -1,7 +1,7 @@
 package api.disponibilite;
 
 import api.BaseTest;
-import api.coupon.Coupon;
+import api.services.coupon.Coupon;
 
 import static junit.framework.Assert.*;
 

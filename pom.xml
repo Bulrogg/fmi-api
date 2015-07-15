@@ -93,7 +93,7 @@
                     <apiSources>
                         <apiSource>
                             <springmvc>true</springmvc>
-                            <locations>api.coupon</locations>
+                            <locations>api.services</locations>
                             <schemes>http</schemes>
                             <host>localhost:8080</host>
                             <basePath>/v1/coupons</basePath>

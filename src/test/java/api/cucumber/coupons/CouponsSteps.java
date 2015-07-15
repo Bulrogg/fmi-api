@@ -1,7 +1,7 @@
 package api.cucumber.coupons;
 
 import api.BaseTest;
-import api.coupon.Coupon;
+import api.services.coupon.Coupon;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;

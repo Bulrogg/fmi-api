@@ -1,6 +1,6 @@
 package api;
 
-import api.coupon.Coupon;
+import api.services.coupon.Coupon;
 import org.joda.time.DateTime;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.http.HttpMethod;

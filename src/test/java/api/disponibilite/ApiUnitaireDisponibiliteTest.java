@@ -1,7 +1,7 @@
 package api.disponibilite;
 
 import api.BaseTest;
-import api.coupon.Coupon;
+import api.services.coupon.Coupon;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

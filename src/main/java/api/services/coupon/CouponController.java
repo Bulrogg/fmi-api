@@ -1,6 +1,5 @@
-package api.coupon;
+package api.services.coupon;
 
-import api.exception.CouponNotFoundException;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiResponse;

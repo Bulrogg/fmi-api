@@ -1,4 +1,4 @@
-package api.coupon;
+package api.services.coupon;
 
 public class Coupon {
 

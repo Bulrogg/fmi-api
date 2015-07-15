@@ -1,4 +1,4 @@
-package api.exception;
+package api.services.coupon;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
