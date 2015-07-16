@@ -5,18 +5,21 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+import static api.data.CouponConstructor.coupon;
+
 @Component
 public class DataInitializer {
 
     @Autowired
     private DataManager dataManager;
 
+    // TODO arriver à unjecter directement le dataManager dans le CouponConstructor pour pouvoir écrire .create()
+
     @PostConstruct
     private void init() {
-        // TODO faire des DSL sympa pour injection de coupon ex : coupon().withName("dd").withReduction("dd").utilise().create()
-        dataManager.addCouponData(new CouponData(null, "Reduction 1", "45 euros", true, "bla bla 1"));
-        dataManager.addCouponData(new CouponData(null, "Reduction 2", "5 euros", false, "bla bla 2"));
-        dataManager.addCouponData(new CouponData(null, "Reduction 3", "10 centimes", false, "bla bla 3"));
+        coupon().withName("Reduction 1").withReduction("45 euros").utilise().create(dataManager);
+        coupon().withName("Reduction 2").withReduction("5 euros").nonUtilise().create(dataManager);
+        coupon().withName("Reduction 3").withReduction("10 centimes").nonUtilise().create(dataManager);
     }
 
 }

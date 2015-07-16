@@ -12,6 +12,9 @@ public class CouponData {
 
     private String unAutreChampsPurBack;
 
+    public CouponData() {
+    }
+
     public CouponData(Integer id, String nom, String reduction, Boolean estUtilise, String unAutreChampsPurBack) {
         this.id = id;
         this.nom = nom;
