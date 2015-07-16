@@ -1,15 +1,22 @@
 package api.services.coupon;
 
 import api.data.CouponData;
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
 
+@ApiModel(value="Coupon", description="Model de coupon échangé pendant les appels")
 public class Coupon {
 
+    @ApiModelProperty(value = "Identifiant unique du coupon. Null si le coupon n'a pas été posté", notes = "null si le coupon n'a pas été encore posté", position = 0)
     private Integer id;
 
+    @ApiModelProperty(value = "Nom du coupon", position = 1)
     private String nom;
 
+    @ApiModelProperty(value = "Réduction du coupon", position = 2)
     private String reduction;
 
+    @ApiModelProperty(value = "True si le coupon a été utilisé et false sinon", position = 3)
     private Boolean estUtilise;
 
     public Coupon() {

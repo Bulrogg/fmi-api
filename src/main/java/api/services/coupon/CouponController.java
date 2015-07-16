@@ -3,11 +3,9 @@ package api.services.coupon;
 import api.data.CouponData;
 import api.data.DataManager;
 import api.services.BaseMockController;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiResponse;
-import com.wordnik.swagger.annotations.ApiResponses;
+import com.wordnik.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +24,10 @@ public class CouponController extends BaseMockController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Récupère les coupons", notes = "Permet de récupérer tous les coupons non utilisés")
+    @ApiOperation(value = "Récupère les coupons", notes = "Permet de récupérer tous les coupons non utilisés", response = Coupon.class, responseContainer="List")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK")
+            @ApiResponse(code = 200, message = "OK - La liste de coupons est retournée au format JSON dans le response body"),
+            @ApiResponse(code = 500, message = "Si une erreur se produit")
     })
     public List<Coupon> getAllCoupons() {
         log("getAllCoupons");
@@ -45,10 +44,13 @@ public class CouponController extends BaseMockController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Récupère un coupon", notes = "Permet de récupérer un coupon par son identifiant")
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK - Le coupon est retourné au format JSON dans le response body", response = Coupon.class),
             @ApiResponse(code = 404, message = "Coupon non trouvé"),
-            @ApiResponse(code = 200, message = "OK")
+            @ApiResponse(code = 500, message = "Si une erreur se produit")
     })
-    public Coupon getCoupon(@PathVariable("couponId") int couponId) {
+    public Coupon getCoupon(
+            @ApiParam(value = "Identifiant du coupon à récupérer", required = true) @PathVariable("couponId") int couponId
+    ) {
         log("getCoupon " + couponId);
         simulerUneLatenceEntre200Et(700);
         if(!dataManager.verifieIdCouponExiste(couponId)) {
@@ -57,33 +59,39 @@ public class CouponController extends BaseMockController {
         return new Coupon(dataManager.getCoupon(couponId));
     }
 
-    // TODO : utiliser le @ResponsesStatus
     @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Ajouter un coupon", notes = "Permet d'ajouter un coupon")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "CREATE")
+            @ApiResponse(code = 201, message = "CREATE - Le coupon créé est retourné", response = Coupon.class),
+            @ApiResponse(code = 500, message = "Si une erreur se produit")
     })
-    public ResponseEntity<Coupon> addCoupon(@RequestBody Coupon coupon) {
+    public Coupon addCoupon(
+            @ApiParam(value = "Coupon à ajouter", required = true) @RequestBody Coupon coupon
+    ) {
         log("addCoupon " + coupon);
         simulerUneLatenceEntre200Et(500);
-        Coupon couponAjoute = new Coupon(dataManager.addCoupon(coupon.getNom(), coupon.getReduction(), coupon.getEstUtilise()));
-        return new ResponseEntity<>(couponAjoute, HttpStatus.CREATED);
+        return new Coupon(dataManager.addCoupon(coupon.getNom(), coupon.getReduction(), coupon.getEstUtilise()));
     }
 
     @RequestMapping(value = "/{couponId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Supprimer un coupon", notes = "Permet de supprimer un coupon par son identifiant")
     @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "NO CONTENT"),
             @ApiResponse(code = 404, message = "Coupon non trouvé"),
-            @ApiResponse(code = 204, message = "NO CONTENT")
+            @ApiResponse(code = 500, message = "Si une erreur se produit")
     })
-    public void deleteCoupon(@PathVariable("couponId") int couponId) {
+    public boolean deleteCoupon(
+            @ApiParam(value = "Identifiant du coupon à supprimer", required = true)  @PathVariable("couponId") int couponId
+    ) {
         log("deleteCoupon " + couponId);
         simulerUneLatenceEntre200Et(300);
         if(!dataManager.verifieIdCouponExiste(couponId)) {
             throw new CouponNotFoundException(couponId);
         }
         dataManager.supprimerCoupon(couponId);
+        return true;
     }
 
 }

@@ -22,7 +22,10 @@
         "produces" : [ "application/json" ],
         "responses" : {
           "200" : {
-            "description" : "OK"
+            "description" : "OK - La liste de coupons est retournée au format JSON dans le response body"
+          },
+          "500" : {
+            "description" : "Si une erreur se produit"
           }
         }
       },
@@ -33,6 +36,15 @@
         "operationId" : "addCoupon",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Coupon à ajouter",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Coupon"
+          }
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -41,7 +53,13 @@
             }
           },
           "201" : {
-            "description" : "CREATE"
+            "description" : "CREATE - Le coupon créé est retourné",
+            "schema" : {
+              "$ref" : "#/definitions/Coupon"
+            }
+          },
+          "500" : {
+            "description" : "Si une erreur se produit"
           }
         }
       }
@@ -56,16 +74,23 @@
         "parameters" : [ {
           "name" : "couponId",
           "in" : "path",
+          "description" : "Identifiant du coupon à récupérer",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK"
+            "description" : "OK - Le coupon est retourné au format JSON dans le response body",
+            "schema" : {
+              "$ref" : "#/definitions/Coupon"
+            }
           },
           "404" : {
             "description" : "Coupon non trouvé"
+          },
+          "500" : {
+            "description" : "Si une erreur se produit"
           }
         }
       },
@@ -77,16 +102,26 @@
         "parameters" : [ {
           "name" : "couponId",
           "in" : "path",
+          "description" : "Identifiant du coupon à supprimer",
           "required" : true,
           "type" : "integer",
           "format" : "int32"
         } ],
         "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "boolean"
+            }
+          },
           "204" : {
             "description" : "NO CONTENT"
           },
           "404" : {
             "description" : "Coupon non trouvé"
+          },
+          "500" : {
+            "description" : "Si une erreur se produit"
           }
         }
       }
@@ -97,19 +132,28 @@
       "properties" : {
         "id" : {
           "type" : "integer",
-          "format" : "int32"
+          "format" : "int32",
+          "description" : "Identifiant unique du coupon. Null si le coupon n'a pas été posté"
         },
         "nom" : {
-          "type" : "string"
+          "type" : "string",
+          "position" : 1,
+          "description" : "Nom du coupon"
         },
         "reduction" : {
-          "type" : "string"
+          "type" : "string",
+          "position" : 2,
+          "description" : "Réduction du coupon"
         },
         "estUtilise" : {
           "type" : "boolean",
+          "position" : 3,
+          "description" : "True si le coupon a été utilisé et false sinon",
           "default" : false
         }
-      }
+      },
+      "description" : "Model de coupon échangé pendant les appels",
+      "discriminator" : "nom,reduction"
     }
   }
 }
