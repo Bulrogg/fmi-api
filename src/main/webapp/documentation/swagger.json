@@ -152,8 +152,7 @@
           "default" : false
         }
       },
-      "description" : "Model de coupon échangé pendant les appels",
-      "discriminator" : "nom,reduction"
+      "description" : "Model de coupon échangé pendant les appels"
     }
   }
 }

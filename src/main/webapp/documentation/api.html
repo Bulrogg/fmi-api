@@ -5,33 +5,21 @@
 <xmp theme="united" style="display:none;">
 #Spécification auto-généré des APIs exposées
 
-
-## HTTP://localhost:8080/v1/coupons
-
-
-Descriptions de toutes les APIs exposées par le bouchon
+> Descriptions de toutes les APIs exposées par le bouchon
 
 
 
-**Version** v1
-
-[**Terms of Service**](FMI Corp)
-
-
-
-
-
-
-
-
-
-
-
+# Règles générales pour l'API
+* Utiliser GET pour récupérer ....
+* Utiliser POST pour ajouter un élément ...
+* Format des dates en ISO
 
 # APIs
 
 
-## /v1/coupons
+----------------
+## Documentation du endpoint : /v1/coupons
+
 
 
 ### GET
@@ -68,13 +56,13 @@ Permet de récupérer tous les coupons non utilisés
 | 200    | OK - La liste de coupons est retournée au format JSON dans le response body |  - |
 | 500    | Si une erreur se produit |  - |
 
+-----------------
 
 
 
 
 
 ### POST
-
 
 <a id="addCoupon">Ajouter un coupon</a>
 
@@ -136,6 +124,7 @@ Permet d&#x27;ajouter un coupon
 | 201    | CREATE - Le coupon créé est retourné | <a href="#/definitions/Coupon">Coupon</a>|
 | 500    | Si une erreur se produit |  - |
 
+-----------------
 
 
 
@@ -148,8 +137,9 @@ Permet d&#x27;ajouter un coupon
 
 
 
+----------------
+## Documentation du endpoint : /v1/coupons/{couponId}
 
-## /v1/coupons/{couponId}
 
 
 ### GET
@@ -212,6 +202,7 @@ Permet de récupérer un coupon par son identifiant
 | 404    | Coupon non trouvé |  - |
 | 500    | Si une erreur se produit |  - |
 
+-----------------
 
 
 
@@ -280,6 +271,7 @@ Permet de supprimer un coupon par son identifiant
 | 404    | Coupon non trouvé |  - |
 | 500    | Si une erreur se produit |  - |
 
+-----------------
 
 
 
