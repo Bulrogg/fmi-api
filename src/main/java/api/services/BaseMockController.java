@@ -10,8 +10,4 @@ public class BaseMockController {
         }
     }
 
-    protected void log(String str) {
-        System.out.println("----------------> " + str);
-    }
-
 }
