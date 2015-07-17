@@ -31,6 +31,4 @@ plugin postman ou curl
 LANCER TOUS LES TESTS
 ------------------------------
 Lancer les tests d'intégration + test BDD (cucumber)
-> mvn test
-
-ou un par un à partir des classes *CouponsIntegrationTest* et *CucumberRunnerTest*
+> mvn test -Dmvn.test.base.url="http://localhost:8080/fmi"
