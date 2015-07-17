@@ -17,9 +17,9 @@ public class DataInitializer {
 
     @PostConstruct
     private void init() {
-        coupon().withName("Reduction 1").withReduction("45 euros").utilise().create(dataManager);
-        coupon().withName("Reduction 2").withReduction("5 euros").nonUtilise().create(dataManager);
-        coupon().withName("Reduction 3").withReduction("10 centimes").nonUtilise().create(dataManager);
+        coupon().withName("Reduction 1").withReduction("45 euros").utilise().withPurBack("bla bla 1").create(dataManager);
+        coupon().withName("Reduction 2").withReduction("5 euros").nonUtilise().withPurBack("bla bla 2").create(dataManager);
+        coupon().withName("Reduction 3").withReduction("10 centimes").nonUtilise().withPurBack("bla bla 3").create(dataManager);
     }
 
 }

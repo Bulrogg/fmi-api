@@ -32,6 +32,11 @@ public class CouponConstructor {
         return this;
     }
 
+    public CouponConstructor withPurBack(String purBack) {
+        couponData.setUnAutreChampsPurBack(purBack);
+        return this;
+    }
+
     public CouponData create(DataManager dataManager) {
         return dataManager.addCouponData(couponData);
     }

@@ -19,7 +19,7 @@ public class DataManager {
     }
 
     public CouponData addCoupon(String nom, String reduction, Boolean estUtilise) {
-        CouponData coupon = new CouponData(nextCouponId, nom, reduction, estUtilise, "champ tech qui sert juste au back");
+        CouponData coupon = new CouponData(nextCouponId, nom, reduction, estUtilise, "bla bla " + nextCouponId);
         couponMap.put(coupon.getId(), coupon);
         nextCouponId++;
         return coupon;
@@ -48,6 +48,10 @@ public class DataManager {
             }
         }
         return couponNonUtilises;
+    }
+
+    public List<CouponData> getListCoupons() {
+        return new ArrayList<>(couponMap.values());
     }
 
 }

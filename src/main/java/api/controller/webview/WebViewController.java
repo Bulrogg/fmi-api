@@ -11,7 +11,7 @@ public class WebViewController {
 
     @RequestMapping("/hello")
     public String welcome(Map<String, Object> model) {
-        model.put("message", "Hello WebView d");
+        model.put("message", "Hello WebView");
         return "/WEB-INF/jsp/webview/hello.jsp";
     }
 
