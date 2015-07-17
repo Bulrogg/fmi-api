@@ -118,7 +118,7 @@
                                     FMI Corp
                                 </termsOfService>
                             </info>
-                            <templatePath>${basedir}/src/main/resources/template/strapdown.html.hbs</templatePath>
+                            <templatePath>${basedir}/src/main/resources/documentation/templates/strapdown.html.hbs</templatePath>
                             <outputPath>${basedir}/src/main/webapp/documentation/api.html</outputPath>
                             <swaggerDirectory>${basedir}/src/main/webapp/documentation/</swaggerDirectory>
                         </apiSource>

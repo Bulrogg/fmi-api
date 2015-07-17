@@ -32,7 +32,7 @@
                         <li class="active"><a href="#">Gestion coupon</a></li>
                         <li><a href="#about">Actions</a></li>
                     </ul>
-                </div><!--/.nav-collapse -->
+                </div>
             </div>
         </nav>
 
