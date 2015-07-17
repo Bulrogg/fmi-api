@@ -3,63 +3,82 @@ package api;
 import api.services.coupon.Coupon;
 import org.joda.time.DateTime;
 import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 import static org.junit.Assert.fail;
 
 public class BaseTest {
 
-    private final static String BASE_URL = "http://api-fmi:8080/fmi/";
-
-    protected final static String URL_DELETE_COUPON = BASE_URL + "v1/coupons/";
-    protected final static String URL_ALL_COUPONS = BASE_URL + "v1/coupons/";
-    protected final static String URL_GET_COUPON = BASE_URL + "v1/coupons/";
-    protected final static String URL_POST_COUPON = BASE_URL + "v1/coupons/";
-
     protected RestTemplate template = new TestRestTemplate();
+
+    private final static String ENDPOINT_DELETE_COUPON = "/v1/coupons/";
+    private final static String ENDPOINT_ALL_COUPONS = "/v1/coupons/";
+    private final static String ENDPOINT_GET_COUPON = "/v1/coupons/";
+    private final static String ENDPOINT_POST_COUPON = "/v1/coupons/";
 
     private DateTime dateJusteAvantLeDernierAppel;
     private DateTime dateJusteApresLeDernierAppel;
 
-    protected long getNbMsPourDernierAppel() {
-        return dateJusteApresLeDernierAppel.getMillis() - dateJusteAvantLeDernierAppel.getMillis();
+    private Properties testProperties;
+
+    public BaseTest() {
+        Resource resource = new ClassPathResource("/test.properties");
+        try {
+            testProperties = PropertiesLoaderUtils.loadProperties(resource);
+        } catch (IOException e) {
+            System.out.println("erreur : " + e.getMessage());
+        }
+
+    }
+
+    private String getBaseUrl() {
+        return testProperties.getProperty("test.api.base.url");
     }
 
     protected ResponseEntity<String> deleteCouponResponseEntity(int idCoupon) {
         dateJusteAvantLeDernierAppel = DateTime.now();
-        ResponseEntity<String> response = template.exchange(URL_DELETE_COUPON + idCoupon, HttpMethod.DELETE, null, String.class);
+        String url = getBaseUrl() + ENDPOINT_DELETE_COUPON + idCoupon;
+        ResponseEntity<String> response = template.exchange(url, HttpMethod.DELETE, null, String.class);
         dateJusteApresLeDernierAppel = DateTime.now();
         return response;
     }
 
     protected ResponseEntity<Coupon> getCouponResponseEntity(int idCoupon) {
         dateJusteAvantLeDernierAppel = DateTime.now();
-        ResponseEntity<Coupon> response = template.getForEntity(URL_GET_COUPON + idCoupon, Coupon.class);
+        String url = getBaseUrl() + ENDPOINT_GET_COUPON + idCoupon;
+        ResponseEntity<Coupon> response = template.getForEntity(url, Coupon.class);
         dateJusteApresLeDernierAppel = DateTime.now();
         return response;
     }
 
     protected ResponseEntity<Coupon> postCouponResponseEntity(String nom, String reduction, Boolean estUtilise) {
         dateJusteAvantLeDernierAppel = DateTime.now();
-        ResponseEntity<Coupon> response = template.postForEntity(URL_POST_COUPON, new Coupon(nom, reduction, estUtilise), Coupon.class);
+        String url = getBaseUrl() + ENDPOINT_POST_COUPON;
+        ResponseEntity<Coupon> response = template.postForEntity(url, new Coupon(nom, reduction, estUtilise), Coupon.class);
         dateJusteApresLeDernierAppel = DateTime.now();
         return response;
     }
 
     protected ResponseEntity<Coupon[]> getAllCoupons() {
         dateJusteAvantLeDernierAppel = DateTime.now();
-        ResponseEntity<Coupon[]> response = template.getForEntity(URL_ALL_COUPONS, Coupon[].class);
+        String url = getBaseUrl() + ENDPOINT_ALL_COUPONS;
+        ResponseEntity<Coupon[]> response = template.getForEntity(url, Coupon[].class);
         dateJusteApresLeDernierAppel = DateTime.now();
         return response;
     }
 
     protected void verifieQueLaListeDeCouponsContientLeCoupon(Integer idCouponRecherche, List<Coupon> coupons) {
-        for(Coupon coupon : coupons) {
-            if(coupon.getId().equals(idCouponRecherche)) {
+        for (Coupon coupon : coupons) {
+            if (coupon.getId().equals(idCouponRecherche)) {
                 return;
             }
         }
@@ -67,10 +86,15 @@ public class BaseTest {
     }
 
     protected void verifieQueLaListeDeCouponsNeContientPasLeCoupon(Integer idCouponRecherche, List<Coupon> coupons) {
-        for(Coupon coupon : coupons) {
-            if(coupon.getId().equals(idCouponRecherche)) {
+        for (Coupon coupon : coupons) {
+            if (coupon.getId().equals(idCouponRecherche)) {
                 fail("Le coupon d'identifiant " + idCouponRecherche + " a été trouvé");
             }
         }
     }
+
+    protected long getNbMsPourDernierAppel() {
+        return dateJusteApresLeDernierAppel.getMillis() - dateJusteAvantLeDernierAppel.getMillis();
+    }
+
 }
