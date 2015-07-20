@@ -1,0 +1,4 @@
+deploy:
+  build: .
+  ports:
+    - "8090:8080"
