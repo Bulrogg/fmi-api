@@ -101,7 +101,7 @@ public class CouponController extends BaseMockController {
             LOGGER.info("OUT - deleteCoupon => Erreur 404");
             throw new CouponNotFoundException(couponId);
         }
-        dataManager.supprimerCouposxn(couponId);
+        dataManager.supprimerCoupon(couponId);
         LOGGER.info("OUT - deleteCoupon");
         return true;
     }
