@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <html lang="fr">
     <head>
@@ -59,6 +60,39 @@
                     </tr>
                 </c:forEach>
             </table>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Ajouter un coupon</h3>
+                </div>
+                <div class="panel-body">
+                    <spring:url value="/admin/addCoupon" var="addCouponUrl" />
+                    <form:form  class="form-inline" method="post" modelAttribute="couponAddForm" action="${addCouponUrl}">
+                        <div class="form-group">
+                            <label for="nom">Nom : </label>
+                            <form:input id="nom" cssClass="form-control" path="nom" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="reduction">Réduction : </label>
+                            <form:input id="reduction" cssClass="form-control" path="reduction" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="estUtilise">Est utilisé : </label>
+                            <form:select id="estUtilise" cssClass="form-control" path="estUtilise">
+                                <form:option value="false" label="oui"/>
+                                <form:option value="true" label="non"/>
+                            </form:select>
+                        </div>
+                        <div class="form-group">
+                            <label for="unAutreChampsPurBack">Autre : </label>
+                            <form:input id="unAutreChampsPurBack" cssClass="form-control" path="unAutreChampsPurBack" type="text"/>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </form:form>
+                </div>
+            </div>
+
         </div>
 
 
