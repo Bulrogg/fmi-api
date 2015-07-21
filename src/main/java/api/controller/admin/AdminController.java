@@ -1,8 +1,6 @@
 package api.controller.admin;
 
 import api.data.DataManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +17,7 @@ public class AdminController {
     @RequestMapping("/gestion-coupons")
     public String coupons(Map<String, Object> model) {
         model.put("coupons", dataManager.getListCoupons());
-        return "/WEB-INF/jsp/admin/gestion-coupons.jsp";
+        return "admin/gestion-coupons";
     }
 
 }
