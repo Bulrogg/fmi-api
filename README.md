@@ -32,3 +32,43 @@ LANCER TOUS LES TESTS
 ------------------------------
 Lancer les tests d'intégration + test BDD (cucumber)
 > mvn test -Dmvn.test.base.url="http://localhost:8080/fmi"
+
+
+LES URLS
+--------
+
+*Webviews*
+/webview/hello
+
+*Administration*
+/admin/gestion-coupons
+
+*APIs*
+/v1/coupons/{couponId} - [GET]
+/v1/coupons/ - [POST]
+/v1/coupons/ - [GET]
+/v1/coupons/{couponId} - [DELETE]
+
+*Actuator*
+/api-docs
+/api-docs/{swaggerGroup}/{apiDeclaration}
+/env/{name:.*}
+/env
+/health
+/autoconfig
+/mappings
+/beans
+/info
+/configprops
+/trace
+/dump
+/metrics/{name:.*}
+
+*Documentation*
+/swagger-ui
+/api-docs
+/documentation/swagger.json
+/documentation/api.html
+
+*Autre*
+/error
