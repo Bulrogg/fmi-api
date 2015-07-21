@@ -63,9 +63,9 @@ LES URLS
 * /metrics/{name:.*}
 
 **Documentation**
-* /swagger-ui
+* /documentation/swagger-ui
 * /api-docs
-* /api-docs/{swaggerGroup}/{apiDeclaration}
+* /documentation/api-docs/{swaggerGroup}/{apiDeclaration}
 * /documentation/swagger.json
 * /documentation/api.html
 
