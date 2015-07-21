@@ -9,10 +9,10 @@ Simple API pour montrer les tests E2E, BDD et la doc API blueprint.
 API EXPOSÉ PAR LE BOUCHON
 -------------------------------------
 
-> GET /v1/coupons/
-> GET [/v1/coupons/{couponId}
-> POST /v1/coupons/   { "nom": "...", "reduction": "  ", "estUtilise": false }
-> DELETE /v1/coupons/{couponId}
+* GET /v1/coupons/
+* GET [/v1/coupons/{couponId}
+* POST /v1/coupons/   { "nom": "...", "reduction": "  ", "estUtilise": false }
+* DELETE /v1/coupons/{couponId}
 
 
 DEMARRER LE BOUCHON
@@ -37,38 +37,37 @@ Lancer les tests d'intégration + test BDD (cucumber)
 LES URLS
 --------
 
-*Webviews*
-/webview/hello
+**Webviews**
+* /webview/hello
 
-*Administration*
-/admin/gestion-coupons
+**Administration**
+* /admin/gestion-coupons
 
-*APIs*
-/v1/coupons/{couponId} - [GET]
-/v1/coupons/ - [POST]
-/v1/coupons/ - [GET]
-/v1/coupons/{couponId} - [DELETE]
+**APIs**
+* /v1/coupons/{couponId} - [GET]
+* /v1/coupons/ - [POST]
+* /v1/coupons/ - [GET]
+* /v1/coupons/{couponId} - [DELETE]
 
-*Actuator*
-/api-docs
-/api-docs/{swaggerGroup}/{apiDeclaration}
-/env/{name:.*}
-/env
-/health
-/autoconfig
-/mappings
-/beans
-/info
-/configprops
-/trace
-/dump
-/metrics/{name:.*}
+**Actuator**
+* /env/{name:.*}
+* /env
+* /health
+* /autoconfig
+* /mappings
+* /beans
+* /info
+* /configprops
+* /trace
+* /dump
+* /metrics/{name:.*}
 
-*Documentation*
-/swagger-ui
-/api-docs
-/documentation/swagger.json
-/documentation/api.html
+**Documentation**
+* /swagger-ui
+* /api-docs
+* /api-docs/{swaggerGroup}/{apiDeclaration}
+* /documentation/swagger.json
+* /documentation/api.html
 
-*Autre*
-/error
+**Autre**
+* /error
