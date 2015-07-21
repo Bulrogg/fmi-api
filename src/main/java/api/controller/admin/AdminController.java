@@ -21,25 +21,24 @@ public class AdminController {
     @RequestMapping(value = "/gestion-coupons", method = RequestMethod.GET)
     public String coupons(Map<String, Object> model) {
         model.put("coupons", dataManager.getListCoupons());
-        model.put("couponAddForm", new CouponData());
+        model.put("couponForm", new CouponData());
         return "admin/gestion-coupons";
     }
 
-    @RequestMapping(value = "/addCoupon", method = RequestMethod.POST)
-    public String addCoupon(@ModelAttribute("couponAddForm") CouponData couponData) {
-        dataManager.addCouponData(couponData);
+    @RequestMapping(value = "/addUpdateCoupon", method = RequestMethod.POST)
+    public String addCoupon(@ModelAttribute("couponForm") CouponData couponData) {
+        if(couponData.getId() != null) {
+            dataManager.updateCouponData(couponData);
+        }
+        else {
+            dataManager.addCouponData(couponData);
+        }
         return "redirect:/admin/gestion-coupons";
     }
 
     @RequestMapping(value = "/deleteCoupon/{id}", method = RequestMethod.GET)
     public String deleteCoupon(@PathVariable("id") int id) {
         dataManager.supprimerCoupon(id);
-        return "redirect:/admin/gestion-coupons";
-    }
-
-    @RequestMapping(value = "/updateCoupon", method = RequestMethod.PUT)
-    public String updateCoupon(@ModelAttribute("couponUpdateForm") CouponData couponData) {
-        dataManager.updateCouponData(couponData);
         return "redirect:/admin/gestion-coupons";
     }
 

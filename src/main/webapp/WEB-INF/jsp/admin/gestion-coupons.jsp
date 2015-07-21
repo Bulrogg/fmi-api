@@ -67,11 +67,15 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Ajouter un coupon</h3>
+                    <h3 class="panel-title">Ajouter / modifier un coupon</h3>
                 </div>
                 <div class="panel-body">
-                    <spring:url value="/admin/addCoupon" var="addCouponUrl" />
-                    <form:form  class="form-inline" method="post" modelAttribute="couponAddForm" action="${addCouponUrl}">
+                    <spring:url value="/admin/addUpdateCoupon" var="addUpdateCouponUrl" />
+                    <form:form method="post" modelAttribute="couponForm" action="${addUpdateCouponUrl}">
+                        <div class="form-group">
+                            <label for="nom">Id : </label>
+                            <form:input id="id" cssClass="form-control" path="id" type="text"/>
+                        </div>
                         <div class="form-group">
                             <label for="nom">Nom : </label>
                             <form:input id="nom" cssClass="form-control" path="nom" type="text"/>
@@ -83,16 +87,15 @@
                         <div class="form-group">
                             <label for="estUtilise">Est utilisé : </label>
                             <form:select id="estUtilise" cssClass="form-control" path="estUtilise">
-                                <form:option value="false" label="oui"/>
-                                <form:option value="true" label="non"/>
+                                <form:option value="false" label="non"/>
+                                <form:option value="true" label="oui"/>
                             </form:select>
                         </div>
                         <div class="form-group">
                             <label for="unAutreChampsPurBack">Autre : </label>
                             <form:input id="unAutreChampsPurBack" cssClass="form-control" path="unAutreChampsPurBack" type="text"/>
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <button type="submit" class="btn btn-primary">Ajouter / Modifier</button>
                     </form:form>
                 </div>
             </div>
