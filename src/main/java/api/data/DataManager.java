@@ -32,6 +32,11 @@ public class DataManager {
         return coupon;
     }
 
+    public CouponData updateCouponData(CouponData couponData) {
+        couponMap.put(couponData.getId(), couponData);
+        return couponData;
+    }
+
     public boolean verifieIdCouponExiste(int couponId) {
         return couponMap.containsKey(couponId);
     }

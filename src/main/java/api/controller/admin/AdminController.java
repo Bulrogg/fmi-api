@@ -5,6 +5,7 @@ import api.data.DataManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -25,8 +26,20 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/addCoupon", method = RequestMethod.POST)
-    public String saveOrUpdateUser(@ModelAttribute("couponAddForm") CouponData couponData) {
+    public String addCoupon(@ModelAttribute("couponAddForm") CouponData couponData) {
         dataManager.addCouponData(couponData);
+        return "redirect:/admin/gestion-coupons";
+    }
+
+    @RequestMapping(value = "/deleteCoupon/{id}", method = RequestMethod.GET)
+    public String deleteCoupon(@PathVariable("id") int id) {
+        dataManager.supprimerCoupon(id);
+        return "redirect:/admin/gestion-coupons";
+    }
+
+    @RequestMapping(value = "/updateCoupon", method = RequestMethod.PUT)
+    public String updateCoupon(@ModelAttribute("couponUpdateForm") CouponData couponData) {
+        dataManager.updateCouponData(couponData);
         return "redirect:/admin/gestion-coupons";
     }
 

@@ -49,6 +49,7 @@
                     <th>Réduction</th>
                     <th>Est utilisé</th>
                     <th>Autre champs pur back</th>
+                    <th>Action</th>
                 </tr>
                 <c:forEach var="coupon" items="${coupons}">
                     <tr>
@@ -57,6 +58,9 @@
                         <td>${coupon.reduction}</td>
                         <td>${coupon.estUtilise}</td>
                         <td>${coupon.unAutreChampsPurBack}</td>
+                        <td>
+                            <a href="<spring:url value="/admin/deleteCoupon/${coupon.id}"/>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>
