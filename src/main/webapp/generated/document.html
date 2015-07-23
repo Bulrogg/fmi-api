@@ -53,7 +53,7 @@ Permet de récupérer tous les coupons non utilisés
 
 | Status Code | Reason      | Response Model |
 |-------------|-------------|----------------|
-| 200    | OK - La liste de coupons est retournée au format JSON dans le response body |  - |
+| 200    | OK - La liste de coupons est retournée au format JSON dans le response body | Array[<a href="#/definitions/Coupon">Coupon</a>]|
 | 500    | Si une erreur se produit |  - |
 
 -----------------
@@ -97,7 +97,7 @@ Permet d&#x27;ajouter un coupon
 <tr>
     <th>body</th>
     <td>body</td>
-    <td>no</td>
+    <td>yes</td>
     <td>Coupon à ajouter</td>
     <td> - </td>
 
@@ -317,7 +317,7 @@ Permet de supprimer un coupon par son identifiant
                     string
                 
             </td>
-            <td>optional</td>
+            <td>required</td>
             <td>Nom du coupon</td>
             <td></td>
         </tr>
@@ -330,7 +330,7 @@ Permet de supprimer un coupon par son identifiant
                     string
                 
             </td>
-            <td>optional</td>
+            <td>required</td>
             <td>Réduction du coupon</td>
             <td></td>
         </tr>

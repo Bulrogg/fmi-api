@@ -15,13 +15,13 @@ public class ApiUnitaireDisponibiliteTest extends BaseTest {
     @Test
     public void GET_coupons() {
         ResponseEntity<Coupon[]> response = getAllCoupons();
-        assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.OK, "/v1/coupons/", "GET");
+        assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.OK, "/v1/coupons", "GET");
     }
 
     @Test
     public void POST_coupons() {
         ResponseEntity<Coupon> response = postCouponResponseEntity("nom testPostACoupons", "reduction testPostACoupons", true);
-        assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.CREATED, "/v1/coupons/", "POST");
+        assertAndLogTempsDeReponse(response.getStatusCode(), HttpStatus.CREATED, "/v1/coupons", "POST");
     }
 
     @Test

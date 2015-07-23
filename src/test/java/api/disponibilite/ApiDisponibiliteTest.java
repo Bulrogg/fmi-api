@@ -32,12 +32,12 @@ public class ApiDisponibiliteTest extends BaseTest {
 
     private String testGetAllCoupons() {
         ResponseEntity<Coupon[]> response = getAllCoupons();
-        return assertAndLog(response.getStatusCode(), HttpStatus.OK, "/v1/coupons/", "GET");
+        return assertAndLog(response.getStatusCode(), HttpStatus.OK, "/v1/coupons", "GET");
     }
 
     private String testPostACoupons() {
         ResponseEntity<Coupon> response = postCouponResponseEntity("nom testPostACoupons", "reduction testPostACoupons", true);
-        return assertAndLog(response.getStatusCode(), HttpStatus.CREATED, "/v1/coupons/", "POST");
+        return assertAndLog(response.getStatusCode(), HttpStatus.CREATED, "/v1/coupons", "POST");
     }
 
     private String testGetACoupons() {

@@ -34,7 +34,7 @@ public class SecurityConfig {
                     .antMatcher("/v1/**")
                     .authorizeRequests().anyRequest()
                     .permitAll();
-                    //.fullyAuthenticated().and().httpBasic();
+            //.fullyAuthenticated().and().httpBasic();
         }
 
     }
@@ -52,17 +52,13 @@ public class SecurityConfig {
                     .roles("DOC");
         }
 
-//        @Override
-//        public void configure(WebSecurity web) throws Exception {
-//            web.ignoring().antMatchers("/**");
-//        }
-
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
-                    .antMatchers("/api-docs**").hasRole("DOC")
-                    .antMatchers("/documentation/**").hasRole("DOC")
+                    .antMatchers("/v2/api-docs**").hasRole("DOC")
+                    .antMatchers("/generated/**").hasRole("DOC")
+                    .antMatchers("/swagger-ui.html**").hasRole("DOC")
                     .anyRequest().permitAll()
                     .and().formLogin();
         }

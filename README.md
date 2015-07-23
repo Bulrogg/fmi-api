@@ -9,9 +9,9 @@ Simple API pour montrer les tests E2E, BDD et la doc API blueprint.
 API EXPOSÉ PAR LE BOUCHON
 -------------------------------------
 
-* GET /v1/coupons/
+* GET /v1/coupons
 * GET [/v1/coupons/{couponId}
-* POST /v1/coupons/   { "nom": "...", "reduction": "  ", "estUtilise": false }
+* POST /v1/coupons   { "nom": "...", "reduction": "  ", "estUtilise": false }
 * DELETE /v1/coupons/{couponId}
 
 
@@ -45,8 +45,8 @@ LES URLS
 
 **APIs**
 * /v1/coupons/{couponId} - [GET]
-* /v1/coupons/ - [POST]
-* /v1/coupons/ - [GET]
+* /v1/coupons - [POST]
+* /v1/coupons - [GET]
 * /v1/coupons/{couponId} - [DELETE]
 
 **Actuator**
@@ -63,11 +63,13 @@ LES URLS
 * /metrics/{name:.*}
 
 **Documentation**
-* /documentation/swagger-ui
-* /api-docs
-* /documentation/api-docs/{swaggerGroup}/{apiDeclaration}
-* /documentation/swagger.json
-* /documentation/api.html
+* /swagger-ui.html
+* /generated/document.html
+* /generated/swagger-ui/swagger.json
+* /v2/api-docs
+* /configuration/security
+* /configuration/ui
+* /swagger-resources
 
 **Autre**
 * /error

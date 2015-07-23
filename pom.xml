@@ -19,7 +19,9 @@
         <cucumber.version>1.2.0</cucumber.version>
         <joda-time.version>2.7</joda-time.version>
         <swagger.springmvc.version>1.0.2</swagger.springmvc.version>
-        <swagger-maven-plugin-version>3.0.0</swagger-maven-plugin-version>
+        <springfox-swagger2.version>2.1.1</springfox-swagger2.version>
+        <springfox-swagger-ui.version>2.1.1</springfox-swagger-ui.version>
+        <swagger-maven-plugin-version>3.1.0</swagger-maven-plugin-version>
     </properties>
 
     <dependencies>
@@ -87,6 +89,17 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox-swagger2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox-swagger-ui.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -127,10 +140,9 @@
                                     FMI Corp
                                 </termsOfService>
                             </info>
-                            <templatePath>${basedir}/src/main/resources/documentation/templates/strapdown.html.hbs
-                            </templatePath>
-                            <outputPath>${basedir}/src/main/webapp/documentation/api.html</outputPath>
-                            <swaggerDirectory>${basedir}/src/main/webapp/documentation/</swaggerDirectory>
+                            <templatePath>${basedir}/src/main/resources/documentation/templates/strapdown.html.hbs</templatePath>
+                            <outputPath>${basedir}/src/main/webapp/generated/document.html</outputPath>
+                            <swaggerDirectory>${basedir}/src/main/webapp/generated/swagger-ui</swaggerDirectory>
                         </apiSource>
                     </apiSources>
                 </configuration>

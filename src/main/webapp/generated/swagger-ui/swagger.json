@@ -22,7 +22,13 @@
         "produces" : [ "application/json" ],
         "responses" : {
           "200" : {
-            "description" : "OK - La liste de coupons est retournée au format JSON dans le response body"
+            "description" : "OK - La liste de coupons est retournée au format JSON dans le response body",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Coupon"
+              }
+            }
           },
           "500" : {
             "description" : "Si une erreur se produit"
@@ -40,7 +46,7 @@
           "in" : "body",
           "name" : "body",
           "description" : "Coupon à ajouter",
-          "required" : false,
+          "required" : true,
           "schema" : {
             "$ref" : "#/definitions/Coupon"
           }
@@ -129,6 +135,8 @@
   },
   "definitions" : {
     "Coupon" : {
+      "type" : "object",
+      "required" : [ "nom", "reduction" ],
       "properties" : {
         "id" : {
           "type" : "integer",

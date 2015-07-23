@@ -20,10 +20,7 @@ public class BaseTest {
 
     protected RestTemplate template = new TestRestTemplate();
 
-    private final static String ENDPOINT_DELETE_COUPON = "/v1/coupons/";
-    private final static String ENDPOINT_ALL_COUPONS = "/v1/coupons/";
-    private final static String ENDPOINT_GET_COUPON = "/v1/coupons/";
-    private final static String ENDPOINT_POST_COUPON = "/v1/coupons/";
+    private final static String ENDPOINT_COUPONS = "/v1/coupons";
 
     private DateTime dateJusteAvantLeDernierAppel;
     private DateTime dateJusteApresLeDernierAppel;
@@ -46,7 +43,7 @@ public class BaseTest {
 
     protected ResponseEntity<String> deleteCouponResponseEntity(int idCoupon) {
         dateJusteAvantLeDernierAppel = DateTime.now();
-        String url = getBaseUrl() + ENDPOINT_DELETE_COUPON + idCoupon;
+        String url = getBaseUrl() + ENDPOINT_COUPONS + "/" + idCoupon;
         ResponseEntity<String> response = template.exchange(url, HttpMethod.DELETE, null, String.class);
         dateJusteApresLeDernierAppel = DateTime.now();
         return response;
@@ -54,7 +51,7 @@ public class BaseTest {
 
     protected ResponseEntity<Coupon> getCouponResponseEntity(int idCoupon) {
         dateJusteAvantLeDernierAppel = DateTime.now();
-        String url = getBaseUrl() + ENDPOINT_GET_COUPON + idCoupon;
+        String url = getBaseUrl() + ENDPOINT_COUPONS + "/" +  + idCoupon;
         ResponseEntity<Coupon> response = template.getForEntity(url, Coupon.class);
         dateJusteApresLeDernierAppel = DateTime.now();
         return response;
@@ -62,7 +59,7 @@ public class BaseTest {
 
     protected ResponseEntity<Coupon> postCouponResponseEntity(String nom, String reduction, Boolean estUtilise) {
         dateJusteAvantLeDernierAppel = DateTime.now();
-        String url = getBaseUrl() + ENDPOINT_POST_COUPON;
+        String url = getBaseUrl() + ENDPOINT_COUPONS;
         ResponseEntity<Coupon> response = template.postForEntity(url, new Coupon(nom, reduction, estUtilise), Coupon.class);
         dateJusteApresLeDernierAppel = DateTime.now();
         return response;
@@ -70,7 +67,7 @@ public class BaseTest {
 
     protected ResponseEntity<Coupon[]> getAllCoupons() {
         dateJusteAvantLeDernierAppel = DateTime.now();
-        String url = getBaseUrl() + ENDPOINT_ALL_COUPONS;
+        String url = getBaseUrl() + ENDPOINT_COUPONS;
         ResponseEntity<Coupon[]> response = template.getForEntity(url, Coupon[].class);
         dateJusteApresLeDernierAppel = DateTime.now();
         return response;

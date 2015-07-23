@@ -3,14 +3,12 @@ package api.services.coupon;
 import api.data.CouponData;
 import api.data.DataManager;
 import api.services.BaseMockController;
-import com.wordnik.swagger.annotations.*;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ public class CouponController extends BaseMockController {
     @Autowired
     private DataManager dataManager;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Récupère les coupons", notes = "Permet de récupérer tous les coupons non utilisés", response = Coupon.class, responseContainer="List")
     @ApiResponses(value = {
@@ -67,7 +65,7 @@ public class CouponController extends BaseMockController {
         return couponARetourner;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Ajouter un coupon", notes = "Permet d'ajouter un coupon")
     @ApiResponses(value = {

@@ -1,4 +1,4 @@
-# /v1/coupons/
+# /v1/coupons
 
 ## GET
 
